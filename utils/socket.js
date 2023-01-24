@@ -58,7 +58,7 @@ function socketApp(server) {
       });
     });
 
-    socket.on("dragging", (pawn) => {
+    socket.on("dragPawn", (pawn) => {
       const user = getCurrentUser(socket.id);
       if (user) {
         user.coordinates.x = pawn.x;

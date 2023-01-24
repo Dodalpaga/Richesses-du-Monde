@@ -6,17 +6,6 @@ const { username, room } = Qs.parse(window.location.search, {
   ignoreQueryPrefix: true,
 });
 
-var stage = new Konva.Stage({
-  container: "container",
-  width: document.getElementById("game-container").clientWidth,
-  height: document.getElementById("game-container").clientHeight,
-});
-
-var layer = new Konva.Layer();
-var radius = 20;
-var rectX = stage.width() / 2 - radius;
-var rectY = stage.height() / 2 - radius;
-
 clientIO.emit("join", { username, room });
 
 document.getElementById("greet-user").innerText = `${username}`;
@@ -33,6 +22,10 @@ clientIO.on("newPlayer", (data) => {
 
 clientIO.on("updatePawns", (pawn) => {
   updatePawns(pawn);
+});
+
+clientIO.on("updateCards", (pawn) => {
+  updateCards(pawn);
 });
 
 clientIO.on("removePawn", (id) => {
@@ -79,56 +72,6 @@ function outputRoomDetails(roomDetails) {
     .join("")}`;
 }
 
-function createPawn(id, x = rectX, y = rectY, color = "grey") {
-  var box = new Konva.Circle({
-    id: id,
-    x: x,
-    y: y,
-    radius: radius,
-    fill: color,
-    stroke: "black",
-    strokeWidth: 4,
-    draggable: true,
-  });
-
-  // add cursor styling
-  box.on("mouseover", function () {
-    document.body.style.cursor = "pointer";
-  });
-  box.on("mouseout", function () {
-    document.body.style.cursor = "default";
-  });
-  box.on("dragmove", () => {
-    box.y(Math.max(box.y(), box.radius()));
-    box.y(Math.min(box.y(), stage.height() - box.radius()));
-    box.x(Math.max(box.x(), box.radius()));
-    box.x(Math.min(box.x(), stage.width() - box.radius()));
-    clientIO.emit("dragging", {
-      id: box.id(),
-      x: box.x(),
-      y: box.y(),
-    });
-  });
-
-  layer.add(box);
-  stage.add(layer);
-}
-
-function updatePawns(pawn) {
-  var movedPawn = stage.findOne("#" + pawn.id);
-  movedPawn.x(pawn.coordinates.x);
-  movedPawn.y(pawn.coordinates.y);
-  layer.draw();
-  stage.add(layer);
-}
-
-function removePawn(pawn_id) {
-  var pawn = stage.findOne("#" + pawn_id);
-  pawn.destroy();
-  layer.draw();
-  stage.add(layer);
-}
-
 $(document).on("mousemove", function (e) {
   clientIO.emit("mouse_activity", { x: e.pageX, y: e.pageY });
 });
@@ -149,3 +92,122 @@ clientIO.on("all_mouse_activity", function (data) {
   $pointer.css("left", data.coords.x);
   $pointer.css("top", data.coords.y);
 });
+
+var Game = new Konva.Stage({
+  container: "container",
+  width: document.getElementById("game-container").clientWidth,
+  height: document.getElementById("game-container").clientHeight,
+});
+
+var cardBoard = new Konva.Stage({
+  container: "cards-container",
+  width: document.getElementById("cardBoard").clientWidth,
+  height: document.getElementById("cardBoard").clientHeight,
+});
+
+var GameLayer = new Konva.Layer();
+var CardsLayer = new Konva.Layer();
+
+var radius = 20;
+var width = 100;
+var height = 50;
+var pawnX = Game.width() / 2 - radius;
+var pawnY = Game.height() / 2 - radius;
+var rectX = cardBoard.width() / 2 - width;
+var rectY = cardBoard.height() / 2 - height;
+
+function createPawn(id, x = pawnX, y = pawnY, color = "grey") {
+  var box = new Konva.Circle({
+    id: id,
+    x: x,
+    y: y,
+    radius: radius,
+    fill: color,
+    stroke: "black",
+    strokeWidth: 4,
+    draggable: true,
+  });
+
+  // add cursor styling
+  box.on("mouseover", function () {
+    document.body.style.cursor = "pointer";
+  });
+  box.on("mouseout", function () {
+    document.body.style.cursor = "default";
+  });
+  box.on("dragmove", () => {
+    box.y(Math.max(box.y(), box.radius()));
+    box.y(Math.min(box.y(), Game.height() - box.radius()));
+    box.x(Math.max(box.x(), box.radius()));
+    box.x(Math.min(box.x(), Game.width() - box.radius()));
+    clientIO.emit("dragPawn", {
+      id: box.id(),
+      x: box.x(),
+      y: box.y(),
+    });
+  });
+
+  GameLayer.add(box);
+  Game.add(GameLayer);
+}
+
+function updatePawns(pawn) {
+  var movedPawn = Game.findOne("#" + pawn.id);
+  movedPawn.x(pawn.coordinates.x);
+  movedPawn.y(pawn.coordinates.y);
+  GameLayer.draw();
+  Game.add(GameLayer);
+}
+
+function updateCards(card) {
+  var movedCard = Game.findOne("#" + card.id);
+  movedCard.x(card.coordinates.x);
+  movedCard.y(card.coordinates.y);
+  CardsLayer.draw();
+  cardBoard.add(CardsLayer);
+}
+
+function removePawn(pawn_id) {
+  var pawn = Game.findOne("#" + pawn_id);
+  pawn.destroy();
+  GameLayer.draw();
+  Game.add(GameLayer);
+}
+
+function createCard(id, x = rectX, y = rectY, color = "brown") {
+  var card = new Konva.Rect({
+    id: id,
+    x: x,
+    y: y,
+    width: width,
+    height: height,
+    fill: color,
+    stroke: "dark-brown",
+    strokeWidth: 4,
+    draggable: true,
+  });
+
+  // add cursor styling
+  card.on("mouseover", function () {
+    document.body.style.cursor = "pointer";
+  });
+  card.on("mouseout", function () {
+    document.body.style.cursor = "default";
+  });
+  card.on("dragmove", () => {
+    card.y(Math.max(card.y(), 0));
+    card.y(Math.min(card.y(), cardBoard.height() - card.height()));
+    card.x(Math.max(card.x(), 0));
+    card.x(Math.min(card.x(), cardBoard.width() - card.width()));
+    clientIO.emit("dragCard", {
+      id: card.id(),
+      x: card.x(),
+      y: card.y(),
+    });
+  });
+
+  CardsLayer.add(card);
+  cardBoard.add(CardsLayer);
+}
+
+createCard("card1");
