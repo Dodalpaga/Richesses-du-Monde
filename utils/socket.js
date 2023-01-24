@@ -2,7 +2,6 @@ var socketIO = require("socket.io");
 var Filter = require("bad-words");
 var frenchBadwordsList = require("french-badwords-list");
 var leoProfanity = require("leo-profanity");
-var createMessage = require("./messages");
 var { userJoin, getCurrentUser, userLeave, getRoomUsers } = require("./users");
 const playerColors = { 0: "#00aadd", 1: "#32a852", 2: "#d6c71e", 3: "#a83232" };
 const userColors = ["#00aadd", "#32a852", "#d6c71e", "#a83232"];
@@ -52,38 +51,11 @@ function socketApp(server) {
       );
       console.log("Connected: " + user.username);
 
-      // Welcomes new client
-      socket.emit(
-        "message",
-        createMessage(
-          appName,
-          `Hello "${user.username}", welcome to "${room}" room!`
-        )
-      );
-
-      socket.broadcast
-        .to(room)
-        .emit(
-          "message",
-          createMessage(appName, `${username} has joined the chat!`)
-        );
-
       // Emit list of users and room in the chat room
       io.to(room).emit("roomUsers", {
         room: room,
         users: getRoomUsers(room),
       });
-    });
-
-    // Listen to client messages
-    socket.on("chatMessage", async (msg) => {
-      const user = getCurrentUser(socket.id);
-      if (user) {
-        io.to(socket.room).emit(
-          "message",
-          createMessage(user.username, leoProfanity.clean(filter.clean(msg)))
-        );
-      }
     });
 
     socket.on("dragging", (pawn) => {
@@ -127,7 +99,6 @@ function socketApp(server) {
 
     socket.on("mouse_activity", (data) => {
       const user = getCurrentUser(socket.id);
-      console.log(data);
       if (user) {
         socket.broadcast.emit("all_mouse_activity", {
           session_id: socket.id,
@@ -143,10 +114,6 @@ function socketApp(server) {
       if (user) {
         socket.emit("disconnect", reason);
         console.log("Disconnected " + user.username + " : " + reason);
-        io.to(user.room).emit(
-          "message",
-          createMessage(appName, `${user.username} has left the chat!`)
-        );
         // Emit list of users and room in the chat room
         io.to(user.room).emit("roomUsers", {
           room: user.room,
@@ -154,6 +121,7 @@ function socketApp(server) {
         });
 
         io.to(user.room).emit("removePawn", (id = user.id));
+        io.to(user.room).emit("removeCursor", (session_id = socket.id));
       }
     });
   });

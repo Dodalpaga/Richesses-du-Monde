@@ -39,6 +39,17 @@ clientIO.on("removePawn", (id) => {
   removePawn(id);
 });
 
+clientIO.on("removeCursor", (session_id) => {
+  console.log(session_id);
+  let divToRemove = document.querySelector(
+    '.pointer[session_id="' + session_id + '"]'
+  );
+  if (divToRemove) {
+    console.log("remove");
+    divToRemove.parentNode.removeChild(divToRemove);
+  }
+});
+
 clientIO.on("disconnect", (reason) => {
   alert("Disconnected from server : " + reason);
   location.href = "/";
@@ -54,28 +65,9 @@ clientIO.on("roomFull", () => {
   location.href = "/";
 });
 
-const chatMessages = document.querySelector(".chat-messages");
-clientIO.on("message", (messageObj) => {
-  outputMessage(messageObj);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-});
-
 clientIO.on("roomUsers", (roomDetails) => {
   outputRoomDetails(roomDetails);
 });
-
-function outputMessage(messageObj) {
-  let div = document.createElement("div");
-  div.classList.add("message");
-
-  let message = messageObj.message;
-  if (messageObj.username === appName) {
-    message = `<strong style='color: orange'>${message}</strong>`;
-  }
-
-  div.innerHTML = `<p class="meta">${messageObj.username} <span>${messageObj.time}</span></p><p class="text">${message}</p>`;
-  document.querySelector(".chat-messages").appendChild(div);
-}
 
 function outputRoomDetails(roomDetails) {
   document.getElementById("room-name").innerText = roomDetails.room;
@@ -123,9 +115,7 @@ function createPawn(id, x = rectX, y = rectY, color = "grey") {
 }
 
 function updatePawns(pawn) {
-  // console.log(pawn.id);
   var movedPawn = stage.findOne("#" + pawn.id);
-  // console.log(movedPawn);
   movedPawn.x(pawn.coordinates.x);
   movedPawn.y(pawn.coordinates.y);
   layer.draw();

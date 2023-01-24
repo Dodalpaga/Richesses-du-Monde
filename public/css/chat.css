@@ -56,7 +56,8 @@ p {
 .chat-container {
   background: #fff;
   height: 100%;
-  width: 800px;
+  min-width: 370px;
+  width: 370px;
   overflow: hidden;
   margin: 0;
   padding: 0;
@@ -84,7 +85,8 @@ p {
   float: left;
   color: #fff;
   padding: 5px 5px 5px;
-  width: 150px;
+  width: 100%;
+  text-align: center;
   height: 100%;
 }
 
@@ -102,59 +104,12 @@ p {
   padding: 10px 0;
 }
 
-.chat-messages {
-  padding: 30px;
-  height: 100%;
-  overflow-y: scroll;
-}
-
-.chat-messages .message {
-  padding: 10px;
-  margin-bottom: 15px;
-  background-color: var(--light-color);
-  border-radius: 5px;
-}
-
-.chat-messages .message .meta {
-  font-size: 15px;
-  font-weight: bold;
-  color: var(--black-color-b);
-  opacity: 0.7;
-  margin-bottom: 7px;
-}
-
-.chat-messages .message .meta span {
-  color: #777;
-}
-
-.chat-form-container {
-  display: flex;
-  height: 90px;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 30px;
-  background-color: var(--black-color-b);
-}
-
-.chat-form-container form {
-  display: flex;
-}
-
-.chat-form-container input[type="text"] {
-  position: relative;
-  font-size: 16px;
-  padding: 5px;
-  height: 40px;
-  width: 100%;
-  flex: 1;
-  margin: 0 10px;
-}
-
 .users {
   margin: 10px;
 }
 
 .users p {
+  font-size: 16px;
   margin-bottom: 7px;
 }
 
@@ -206,30 +161,6 @@ p {
 
 .forward {
   color: #5cb85c;
-}
-
-@media (max-width: 1150px) {
-  .chat-container {
-    max-width: 300px;
-  }
-
-  .chat-main {
-    display: block;
-    width: 100%;
-  }
-
-  .chat-messages {
-    display: none;
-  }
-
-  .chat-sidebar {
-    width: 100%;
-    text-align: center;
-  }
-
-  .chat-header {
-    display: none;
-  }
 }
 
 table {
