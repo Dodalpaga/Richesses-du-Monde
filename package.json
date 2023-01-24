@@ -1,0 +1,22 @@
+{
+  "name": "socket_nodejs",
+  "version": "1.0.0",
+  "description": "Socket programming demo",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bad-words": "^3.0.4",
+    "express": "^4.18.2",
+    "french-badwords-list": "^1.0.6",
+    "leo-profanity": "^1.5.1",
+    "moment": "^2.24.0",
+    "nodemon": "^2.0.19",
+    "socket.io": "^2.3.0"
+  }
+}

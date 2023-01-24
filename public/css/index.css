@@ -1,0 +1,161 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+
+:root {
+  --dark-color-a: #ef5b19;
+  --dark-color-b: #b13b04;
+  --light-color: #ffeee6;
+  --black-color-a: #18191e;
+  --black-color-b: #0d0e11;
+  --success-color: #5cb85c;
+  --error-color: #d9534f;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  height: 100%;
+  overflow: hidden;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+p {
+  word-break: break-all;
+}
+
+.btn {
+  cursor: pointer;
+  padding: 5px 15px;
+  background: var(--light-color);
+  color: var(--dark-color-a);
+  border: 0;
+  font-size: 17px;
+}
+/* Join Page */
+.join-container {
+  position: relative;
+  width: 700px;
+  margin: 80px auto;
+  color: #fff;
+}
+
+.join-header {
+  text-align: center;
+  padding: 20px;
+  background: var(--dark-color-a);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.join-main {
+  padding: 30px 40px;
+  background: var(--dark-color-b);
+
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.join-main p {
+  margin-bottom: 40px;
+}
+
+.join-main .form-control {
+  margin-bottom: 20px;
+}
+
+.join-main label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.join-main input[type="text"] {
+  font-size: 16px;
+  padding: 5px;
+  height: 40px;
+  width: 100%;
+}
+
+.join-main select {
+  font-size: 16px;
+  padding: 5px;
+  height: 40px;
+  width: 100%;
+}
+
+.join-main .btn {
+  margin-top: 20px;
+  width: 100%;
+}
+.gw-title {
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5em;
+  border: 4px double var(--light-color);
+  border-radius: 5px;
+  border-width: 4px 0;
+  padding: 1.5em 0em;
+}
+.gw-title span {
+  font: 700 4em/1 "Oswald", sans-serif;
+  letter-spacing: 0;
+  padding: 0.25em 0 0.325em;
+  display: block;
+  margin: 0 auto;
+  /* Clip Background Image */
+  background: url(https://i.ibb.co/RDTnNrT/animated-text-fill.png) repeat-y;
+  -webkit-background-clip: text;
+  background-clip: text;
+  /* Animate Background Image */
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: aitf 120s linear infinite;
+  /* Activate hardware acceleration for smoother animations */
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+}
+
+@keyframes aitf {
+  0% {
+    background-position: 0px 0px;
+  }
+  100% {
+    background-position: -5400px 0px;
+  }
+}
+
+.scrollingBG {
+  position: absolute;
+  content: "";
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  z-index: -1;
+  background-image: radial-gradient(
+      circle,
+      rgba(230, 230, 230, 0.8) 30%,
+      rgba(255, 255, 255, 0.8) 100%
+    ),
+    url("../imgs/Seamless.png");
+  background-size: 50%;
+  filter: invert(100%);
+  transform: rotate(30deg);
+}
+
+@media (max-width: 1150px) {
+  .join-container {
+    max-width: 400px;
+  }
+}
