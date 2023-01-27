@@ -1,15 +1,6 @@
 var socketIO = require("socket.io");
-var Filter = require("bad-words");
-var frenchBadwordsList = require("french-badwords-list");
-var leoProfanity = require("leo-profanity");
 var { userJoin, getCurrentUser, userLeave, getRoomUsers } = require("./users");
-const playerColors = { 0: "#00aadd", 1: "#32a852", 2: "#d6c71e", 3: "#a83232" };
-const userColors = ["#00aadd", "#32a852", "#d6c71e", "#a83232"];
-
-const appName = "--Richesses du Monde--";
-
-const filter = new Filter();
-leoProfanity.add(frenchBadwordsList.array);
+const userColors = ["#d9534f", "#5cb85c", "#5bc0de", "#f0ad4e"];
 
 function socketApp(server) {
   const io = socketIO(server);
