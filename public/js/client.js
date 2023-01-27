@@ -109,8 +109,8 @@ var GameLayer = new Konva.Layer();
 var CardsLayer = new Konva.Layer();
 
 var radius = 20;
-var width = 100;
-var height = 50;
+var height = 200;
+var width = height * 1.3706;
 var pawnX = Game.width() / 2 - radius;
 var pawnY = Game.height() / 2 - radius;
 var rectX = cardBoard.width() / 2 - width;
@@ -174,40 +174,42 @@ function removePawn(pawn_id) {
   Game.add(GameLayer);
 }
 
-function createCard(id, x = rectX, y = rectY, color = "brown") {
-  var card = new Konva.Rect({
-    id: id,
-    x: x,
-    y: y,
-    width: width,
-    height: height,
-    fill: color,
-    stroke: "dark-brown",
-    strokeWidth: 4,
-    draggable: true,
-  });
-
-  // add cursor styling
-  card.on("mouseover", function () {
-    document.body.style.cursor = "pointer";
-  });
-  card.on("mouseout", function () {
-    document.body.style.cursor = "default";
-  });
-  card.on("dragmove", () => {
-    card.y(Math.max(card.y(), 0));
-    card.y(Math.min(card.y(), cardBoard.height() - card.height()));
-    card.x(Math.max(card.x(), 0));
-    card.x(Math.min(card.x(), cardBoard.width() - card.width()));
-    clientIO.emit("dragCard", {
-      id: card.id(),
-      x: card.x(),
-      y: card.y(),
+function createCard(id, x = rectX, y = rectY, path = "../imgs/card.png") {
+  var cardObj = new Image();
+  cardObj.onload = function () {
+    var card = new Konva.Image({
+      id: id,
+      x: x,
+      y: y,
+      width: width,
+      height: height,
+      image: cardObj,
+      // cornerRadius: 10,
+      draggable: true,
     });
-  });
+    // add cursor styling
+    card.on("mouseover", function () {
+      document.body.style.cursor = "pointer";
+    });
+    card.on("mouseout", function () {
+      document.body.style.cursor = "default";
+    });
+    card.on("dragmove", () => {
+      card.y(Math.max(card.y(), 0));
+      card.y(Math.min(card.y(), cardBoard.height() - card.height()));
+      card.x(Math.max(card.x(), 0));
+      card.x(Math.min(card.x(), cardBoard.width() - card.width()));
+      clientIO.emit("dragCard", {
+        id: card.id(),
+        x: card.x(),
+        y: card.y(),
+      });
+    });
 
-  CardsLayer.add(card);
-  cardBoard.add(CardsLayer);
+    CardsLayer.add(card);
+    cardBoard.add(CardsLayer);
+  };
+  cardObj.src = path;
 }
 
 createCard("card1");
