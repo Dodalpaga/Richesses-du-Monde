@@ -38,4 +38,5 @@
   padding: 10px;
   background-image: radial-gradient(circle, var(--a) 0%, var(--b) 100%);
   background-clip: content-box, padding-box;
+  border: 5px outset var(--b);
 }

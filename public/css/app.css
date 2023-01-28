@@ -19,11 +19,7 @@ body {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
   height: 100%;
-  background: radial-gradient(
-    circle,
-    var(--black-color-a) 30%,
-    var(--black-color-b) 100%
-  );
+  background: var(--black-color-b);
 }
 
 ul {

@@ -37,6 +37,11 @@
   border: 5px outset var(--b);
 }
 
+#stock-cards {
+  border-radius: 10px;
+  border: 5px outset var(--b);
+}
+
 .pl1 {
   background-color: #d9534f;
 }
