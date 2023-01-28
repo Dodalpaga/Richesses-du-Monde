@@ -1,0 +1,174 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+
+:root {
+  --black-color-a: #ef5b19;
+  --black-color-b: #b13b04;
+  --light-color: #e6e9ff;
+  --black-color-a: #292c38;
+  --black-color-b: #1f222c;
+  --success-color: #5cb85c;
+  --error-color: #d9534f;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  height: 100%;
+  background: radial-gradient(
+    circle,
+    var(--black-color-a) 30%,
+    var(--black-color-b) 100%
+  );
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+p {
+  word-break: break-all;
+}
+
+.btn {
+  cursor: pointer;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 5px 15px;
+  background: var(--light-color);
+  color: var(--black-color-a);
+  border: 0;
+  font-size: 17px;
+}
+
+/* Chat Page */
+
+.chat-container {
+  background: #fff;
+  height: 200px;
+  width: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.chat-header {
+  background: var(--black-color-b);
+  color: #fff;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.chat-main {
+  background-color: var(--black-color-a);
+  width: 100%;
+  height: calc(100% - 60px);
+  float: left;
+}
+
+.chat-sidebar {
+  display: flex;
+  flex-direction: column;
+  flex-flow: column;
+  width: 100%;
+  height: 100%;
+  background: var(--black-color-b);
+  color: #fff;
+  padding: 5px 5px 5px;
+  text-align: center;
+}
+
+.chat-sidebar h2 {
+  flex: 0 1 auto;
+  font-size: 20px;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.chat-sidebar h3 {
+  margin-bottom: 15px;
+}
+
+.chat-sidebar ul {
+  display: flex;
+  justify-content: center;
+  flex: 1 1 auto;
+  list-style: none;
+}
+
+.chat-sidebar ul li {
+  padding: 10px;
+}
+
+.users {
+  margin: 10px;
+}
+
+.users p {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  margin: 7px;
+}
+
+.pointer {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  z-index: 3;
+  transform: translate(-50%, -50%);
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.value {
+  text-align: center;
+}
+
+table td input {
+  display: flexbox;
+  font-size: medium;
+  width: 50%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

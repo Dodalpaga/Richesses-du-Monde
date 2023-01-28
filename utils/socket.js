@@ -1,6 +1,12 @@
 var socketIO = require("socket.io");
 var { userJoin, getCurrentUser, userLeave, getRoomUsers } = require("./users");
 const userColors = ["#d9534f", "#5cb85c", "#5bc0de", "#f0ad4e"];
+const userCoordinates = [
+  { x: 0.91, y: 0.9 },
+  { x: 0.95, y: 0.9 },
+  { x: 0.95, y: 0.95 },
+  { x: 0.91, y: 0.95 },
+];
 
 function socketApp(server) {
   const io = socketIO(server);
@@ -32,13 +38,14 @@ function socketApp(server) {
         (color) => !usedColors.includes(color)
       );
       const userColor = availableColors[0];
+      const userCoords = userCoordinates[getRoomUsers(room).length];
       const user = userJoin(
         socket.id,
         username,
         room,
         (money = 17500000),
         (color = userColor),
-        (coordinates = { x: 0, y: 0 })
+        (coordinates = userCoords)
       );
       console.log("Connected: " + user.username);
 
@@ -57,6 +64,16 @@ function socketApp(server) {
         io.to(socket.room).emit("updatePawns", {
           id: pawn.id,
           coordinates: user.coordinates,
+        });
+      }
+    });
+
+    socket.on("dragCard", (card) => {
+      const user = getCurrentUser(socket.id);
+      if (user) {
+        io.to(socket.room).emit("updateCards", {
+          id: card.id,
+          coordinates: { x: card.x, y: card.y },
         });
       }
     });
@@ -88,16 +105,16 @@ function socketApp(server) {
       }
     });
 
-    socket.on("mouse_activity", (data) => {
-      const user = getCurrentUser(socket.id);
-      if (user) {
-        socket.broadcast.emit("all_mouse_activity", {
-          session_id: socket.id,
-          coords: data,
-          color: user.color,
-        });
-      }
-    });
+    // socket.on("mouse_activity", (data) => {
+    //   const user = getCurrentUser(socket.id);
+    //   if (user) {
+    //     socket.broadcast.emit("all_mouse_activity", {
+    //       session_id: socket.id,
+    //       coords: data,
+    //       color: user.color,
+    //     });
+    //   }
+    // });
 
     // When client disconnects
     socket.on("disconnect", (reason) => {
