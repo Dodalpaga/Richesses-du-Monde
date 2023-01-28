@@ -5,8 +5,6 @@
   height: 200%;
   width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 #cards-container {
@@ -28,11 +26,15 @@
 }
 
 #stock-cards {
-  background-color: gray;
+  border-radius: 20px;
+  padding: 10px;
+  background-image: radial-gradient(circle, var(--a) 0%, var(--b) 100%);
+  background-clip: content-box, padding-box;
 }
 
-#players-cards {
-  background-color: var(--black-color-a);
+#players-cards .row .column {
+  border-radius: 10px;
+  border: 5px outset var(--b);
 }
 
 .pl1 {
@@ -49,26 +51,4 @@
 
 .pl4 {
   background-color: #f0ad4e;
-}
-
-.column {
-  float: left;
-  padding: 10px;
-  height: 100%; /* Should be removed. Only for demonstration */
-}
-
-.left {
-  width: 100%;
-  max-width: 1330px;
-}
-
-.right {
-  width: calc(100% - 1330px);
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
 }

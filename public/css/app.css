@@ -1,13 +1,11 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 
 :root {
-  --black-color-a: #ef5b19;
-  --black-color-b: #b13b04;
+  --a: #405b96;
+  --b: #3a4166;
   --light-color: #e6e9ff;
   --black-color-a: #292c38;
   --black-color-b: #1f222c;
-  --success-color: #5cb85c;
-  --error-color: #d9534f;
 }
 
 * {
@@ -134,41 +132,31 @@ p {
   transform: translate(-50%, -50%);
 }
 
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td,
-th {
-  border: 1px solid #dddddd;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-
-.value {
-  text-align: center;
-}
-
-table td input {
-  display: flexbox;
-  font-size: medium;
-  width: 50%;
-  height: 100%;
-  border: none;
-  background: transparent;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-}
-
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+.column {
+  float: left;
+  padding: 10px;
+  height: 100%; /* Should be removed. Only for demonstration */
+}
+
+.left {
+  width: 100%;
+  max-width: 1262px;
+}
+
+.right {
+  width: calc(100% - 1262px);
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
 }

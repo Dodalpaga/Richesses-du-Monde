@@ -22,9 +22,9 @@ function resizeCards() {
   });
 }
 
-// $(window).resize(function () {
-//   resizeCards();
-// });
+$(window).resize(function () {
+  resizeCards();
+});
 
 var CardsLayer = new Konva.Layer();
 
