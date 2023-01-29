@@ -116,6 +116,20 @@ function socketApp(server) {
     //   }
     // });
 
+    socket.on("roll user", () => {
+      var roll = Math.floor(Math.random() * 6) + 1;
+      const user = getCurrentUser(socket.id);
+      if (user) {
+        var rollData = {
+          username: user.username,
+          roll: roll,
+        };
+
+        socket.emit("user rolled", rollData);
+        socket.broadcast.emit("user rolled", rollData);
+      }
+    });
+
     // When client disconnects
     socket.on("disconnect", (reason) => {
       const user = userLeave(socket.id);

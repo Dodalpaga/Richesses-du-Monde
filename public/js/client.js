@@ -1,7 +1,8 @@
 const clientIO = io();
 import { createPawn, updatePawns, removePawn } from "./pawns.js";
 import { createCard, updateCards } from "./cards.js";
-
+var $rollButton = $(".roll-button"); // The roll dice button
+var $diceResults = $(".dice-results"); // The dice roll results div
 const { username, room } = Qs.parse(window.location.search, {
   ignoreQueryPrefix: true,
 });
@@ -77,6 +78,19 @@ function outputRoomDetails(roomDetails) {
     )
     .join("")}`;
 }
+
+$rollButton.click(function () {
+  clientIO.emit("roll user");
+});
+
+function logDice(message) {
+  var $el = $("<li>").text(message);
+  $diceResults.prepend($el);
+}
+
+clientIO.on("user rolled", function (data) {
+  logDice("User " + data.username + " rolled: " + data.roll);
+});
 
 // $(document).on("mousemove", function (e) {
 //   clientIO.emit("mouse_activity", {
