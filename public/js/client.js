@@ -73,6 +73,10 @@ clientIO.on("playersList", (playersList) => {
   outputPlayersList(playersList);
 });
 
+clientIO.on("shareTransaction", (transaction) => {
+  shareTransaction(transaction);
+});
+
 function outputRoomDetails(roomDetails) {
   document.getElementById("room-name").innerText = roomDetails.room;
   document.getElementById("users").innerHTML = `${roomDetails.users
@@ -98,6 +102,7 @@ function outputPlayersList(playersList) {
     "background:${color};font-weight:bold;font-size:20px;";
   playersList1.append(element1);
   playersList2.append(element2);
+  console.log(playersList["users"][0]);
   for (var i = 0; i < playersList["users"].length; i++) {
     let color = playersList["users"][i].color;
     var element1 = document.createElement("option");
@@ -113,17 +118,60 @@ function outputPlayersList(playersList) {
   }
 }
 
+function makeTransaction() {
+  var player1 = document.getElementById("player1").value;
+  var player2 = document.getElementById("player2").value;
+  var amount = document.getElementById("amount").value;
+  if (player1 == "Select an option" || player2 == "Select an option") {
+    alert("Please select a player");
+  } else if (player1 == player2) {
+    alert("Please select different players");
+  } else if (amount == "") {
+    alert("Please enter an amount");
+  } else {
+    clientIO.emit("makeTransaction", {
+      player1: player1,
+      player2: player2,
+      amount: amount,
+    });
+    document.getElementById("amount").value = "";
+    document.getElementById("player1").value = "Select an option";
+    document.getElementById("player2").value = "Select an option";
+  }
+}
+
+function shareTransaction(transaction) {
+  var $el = $("<li style='height:10px'>").text(" ");
+  $diceResults.prepend($el);
+  var $el = $("<li>").text(
+    transaction.maker +
+      " " +
+      "made a transaction : " +
+      transaction.player1 +
+      " gave " +
+      transaction.player2 +
+      " " +
+      transaction.amount +
+      " $"
+  );
+  $diceResults.prepend($el);
+}
+
+document.getElementById("submit").addEventListener("click", makeTransaction);
+
 $rollButton.click(function () {
   clientIO.emit("roll user");
 });
 
 function logDice(message) {
+  var $el = $("<li style='height:10px'>").text(" ");
+  $diceResults.prepend($el);
   var $el = $("<li>").text(message);
   $diceResults.prepend($el);
 }
 
 clientIO.on("user rolled", function (data) {
-  logDice("User " + data.username + " rolled: " + data.roll);
+  logDice(data.username + " rolled: " + data.roll);
 });
 
 // $(document).on("mousemove", function (e) {

@@ -29,7 +29,7 @@
           <h2><i class="fas fa-user"></i> User :</h2>
           <h3 id="greet-user" style="text-align: right; width: 50px"></h3>
         </div>
-        <a href="index.html" class="btn">Leave Room</a>
+        <a href="index.html" class="button">Leave Room</a>
       </header>
       <main class="chat-main">
         <div class="chat-sidebar">
@@ -55,7 +55,7 @@
             <ul class="resultsArea" id="resultsArea"></ul>
           </div>
           <div id="transactions">
-            <form action="makeTransaction" id="transactionsForm" class="box">
+            <div id="transactionsForm" class="box">
               <select name="player1" id="player1"></select>
               <input
                 style="
@@ -65,15 +65,15 @@
                   text-align: center;
                 "
                 type="number"
-                id="fname"
-                name="fname"
+                id="amount"
+                name="amount"
               />
               <select
                 style="margin-left: 10px"
                 name="player2"
                 id="player2"
               ></select>
-            </form>
+            </div>
             <i
               style="margin-left: 10px; color: white; font-size: 30px"
               class="fas fa-arrow-right"
@@ -84,23 +84,8 @@
               class="btn"
               type="submit"
               form="transactionsForm"
-              value="Submit"
+              id="submit"
             >
-              <svg
-                width="180px"
-                height="60px"
-                viewBox="0 0 180 60"
-                class="border"
-              >
-                <polyline
-                  points="179,1 179,59 1,59 1,1 179,1"
-                  class="bg-line"
-                />
-                <polyline
-                  points="179,1 179,59 1,59 1,1 179,1"
-                  class="hl-line"
-                />
-              </svg>
               <span>Make Transaction</span>
             </button>
           </div>

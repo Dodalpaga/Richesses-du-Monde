@@ -120,6 +120,48 @@ function socketApp(server) {
     //   }
     // });
 
+    socket.on("makeTransaction", (transaction) => {
+      const user = getCurrentUser(socket.id);
+      if (user) {
+        getRoomUsers(socket.room).forEach((user) => {
+          if (user.username == transaction.player1) {
+            user.money = parseInt(user.money) - parseInt(transaction.amount);
+          }
+          if (user.username == transaction.player2) {
+            user.money = parseInt(user.money) + parseInt(transaction.amount);
+          }
+        });
+        io.to(user.room).emit("roomUsers", {
+          room: user.room,
+          users: getRoomUsers(user.room),
+        });
+        if (transaction.player1 == user.username) {
+          io.to(user.room).emit("shareTransaction", {
+            player1: transaction.player1,
+            player2: transaction.player2,
+            maker: transaction.player1,
+            amount: transaction.amount,
+          });
+        } else {
+          if (transaction.player2 == user.username) {
+            io.to(user.room).emit("shareTransaction", {
+              player1: transaction.player1,
+              player2: transaction.player2,
+              maker: transaction.player2,
+              amount: transaction.amount,
+            });
+          } else {
+            io.to(user.room).emit("shareTransaction", {
+              player1: transaction.player1,
+              player2: transaction.player2,
+              maker: user.username,
+              amount: transaction.amount,
+            });
+          }
+        }
+      }
+    });
+
     socket.on("roll user", () => {
       var roll = Math.floor(Math.random() * 6) + 1;
       const user = getCurrentUser(socket.id);
