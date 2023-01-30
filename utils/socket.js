@@ -54,6 +54,10 @@ function socketApp(server) {
         room: room,
         users: getRoomUsers(room),
       });
+
+      io.to(room).emit("playersList", {
+        users: getRoomUsers(room),
+      });
     });
 
     socket.on("dragPawn", (pawn) => {
@@ -139,6 +143,9 @@ function socketApp(server) {
         // Emit list of users and room in the chat room
         io.to(user.room).emit("roomUsers", {
           room: user.room,
+          users: getRoomUsers(user.room),
+        });
+        io.to(user.room).emit("playersList", {
           users: getRoomUsers(user.room),
         });
 

@@ -2,7 +2,7 @@ const clientIO = io();
 import { createPawn, updatePawns, removePawn } from "./pawns.js";
 import { createCard, updateCards } from "./cards.js";
 var $rollButton = $(".roll-button"); // The roll dice button
-var $diceResults = $(".dice-results"); // The dice roll results div
+var $diceResults = $(".resultsArea"); // The dice roll results div
 const { username, room } = Qs.parse(window.location.search, {
   ignoreQueryPrefix: true,
 });
@@ -69,6 +69,10 @@ clientIO.on("roomUsers", (roomDetails) => {
   outputRoomDetails(roomDetails);
 });
 
+clientIO.on("playersList", (playersList) => {
+  outputPlayersList(playersList);
+});
+
 function outputRoomDetails(roomDetails) {
   document.getElementById("room-name").innerText = roomDetails.room;
   document.getElementById("users").innerHTML = `${roomDetails.users
@@ -77,6 +81,36 @@ function outputRoomDetails(roomDetails) {
         `<p><i class="fas fa-dot-circle" style="color:${user.color}"></i> ${user.username}<br>(${user.money} $)</p>`
     )
     .join("")}`;
+}
+
+function outputPlayersList(playersList) {
+  var playersList1 = document.getElementById("player1");
+  var playersList2 = document.getElementById("player2");
+  $("#player1").empty();
+  $("#player2").empty();
+  var element1 = document.createElement("option");
+  var element2 = document.createElement("option");
+  element1.innerText = "Select an option";
+  element2.innerText = "Select an option";
+  element1.style.cssText =
+    "background:${color};font-weight:bold;font-size:20px;";
+  element2.style.cssText =
+    "background:${color};font-weight:bold;font-size:20px;";
+  playersList1.append(element1);
+  playersList2.append(element2);
+  for (var i = 0; i < playersList["users"].length; i++) {
+    let color = playersList["users"][i].color;
+    var element1 = document.createElement("option");
+    var element2 = document.createElement("option");
+    element1.innerText = playersList["users"][i].username;
+    element2.innerText = playersList["users"][i].username;
+    element1.style.cssText =
+      "background:${color};font-weight:bold;font-size:20px;";
+    element2.style.cssText =
+      "background:${color};font-weight:bold;font-size:20px;";
+    playersList1.append(element1);
+    playersList2.append(element2);
+  }
 }
 
 $rollButton.click(function () {

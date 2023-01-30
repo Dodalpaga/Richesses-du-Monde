@@ -42,10 +42,67 @@
       <div id="game-container"></div>
       <div id="game-background" class="row">
         <div id="players-game" class="column left"></div>
-        <div id="transactions" class="column right">
-          <input type="button" class="roll-button" value="Roll" />
-          <div id="resultsArea">
-            <ul class="dice-results"></ul>
+        <div id="gameplay" class="column right">
+          <div
+            style="
+              max-height: 50%;
+              height: 50%;
+              text-align: center;
+              margin: 10px;
+            "
+          >
+            <input type="button" class="roll-button btn" value="Roll" />
+            <ul class="resultsArea" id="resultsArea"></ul>
+          </div>
+          <div id="transactions">
+            <form action="makeTransaction" id="transactionsForm" class="box">
+              <select name="player1" id="player1"></select>
+              <input
+                style="
+                  margin-left: 10px;
+                  width: 120px;
+                  font-size: 24px;
+                  text-align: center;
+                "
+                type="number"
+                id="fname"
+                name="fname"
+              />
+              <select
+                style="margin-left: 10px"
+                name="player2"
+                id="player2"
+              ></select>
+            </form>
+            <i
+              style="margin-left: 10px; color: white; font-size: 30px"
+              class="fas fa-arrow-right"
+            ></i>
+            <br />
+            <br />
+            <button
+              class="btn"
+              type="submit"
+              form="transactionsForm"
+              value="Submit"
+            >
+              <svg
+                width="180px"
+                height="60px"
+                viewBox="0 0 180 60"
+                class="border"
+              >
+                <polyline
+                  points="179,1 179,59 1,59 1,1 179,1"
+                  class="bg-line"
+                />
+                <polyline
+                  points="179,1 179,59 1,59 1,1 179,1"
+                  class="hl-line"
+                />
+              </svg>
+              <span>Make Transaction</span>
+            </button>
           </div>
         </div>
       </div>

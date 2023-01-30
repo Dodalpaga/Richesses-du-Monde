@@ -33,7 +33,7 @@
   background-clip: content-box, padding-box;
 }
 
-#transactions {
+#gameplay {
   border-radius: 10px;
   padding: 10px;
   background-image: radial-gradient(circle, var(--a) 0%, var(--b) 100%);
@@ -41,18 +41,37 @@
   border: 5px outset var(--b);
 }
 
+#transactions {
+  text-align: center;
+  border-radius: 10px;
+  padding: 10px;
+  background-image: radial-gradient(circle, var(--a) 0%, var(--b) 100%);
+  background-clip: content-box, padding-box;
+  border: 5px outset var(--b);
+}
+
+#transactionsForm {
+  align-items: center;
+  justify-content: center;
+  max-height: 50%;
+  height: 50%;
+  display: flex;
+}
+
 .roll-button {
   height: 60px;
   border: none;
   font-size: 30px;
-  background: rgb(255, 255, 255);
-  color: rgb(255, 2, 2);
+  color: white;
   cursor: pointer;
   width: 100%;
 }
 
 #resultsArea {
-  height: calc(100% - 125px);
+  text-align: left;
+  margin-top: 10px;
+  color: white;
+  height: calc(100% - 60px);
   margin: 0;
   overflow-y: scroll;
   padding: 10px 20px 10px 20px;
@@ -61,4 +80,57 @@
 ul {
   list-style: none;
   word-wrap: break-word;
+}
+
+.box select {
+  background-color: #0563af;
+  color: white;
+  padding: 12px;
+  width: 200px;
+  border: none;
+  font-size: 18px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
+
+.box select option {
+  padding: 30px;
+}
+
+.btn {
+  width: 180px;
+  height: 60px;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid #91c9ff;
+  outline: none;
+  transition: 1s ease-in-out;
+}
+
+svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  fill: none;
+  stroke: #fff;
+  stroke-dasharray: 150 480;
+  stroke-dashoffset: 150;
+  transition: 1s ease-in-out;
+}
+
+.btn:hover {
+  transition: 1s ease-in-out;
+  background: #4f95da;
+}
+
+.btn:hover svg {
+  stroke-dashoffset: -480;
+}
+
+.btn span {
+  color: white;
+  font-size: 18px;
+  font-weight: 100;
 }
