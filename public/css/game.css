@@ -83,7 +83,7 @@ ul {
 }
 
 .box select {
-  background-color: #0563af;
+  background: #0563af;
   color: white;
   padding: 12px;
   width: 200px;
@@ -106,6 +106,17 @@ ul {
   background: transparent;
   border: 1px solid #91c9ff;
   outline: none;
+  transition: 1s ease-in-out;
+}
+
+svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  fill: none;
+  stroke: #fff;
+  stroke-dasharray: 150 480;
+  stroke-dashoffset: 150;
   transition: 1s ease-in-out;
 }
 
