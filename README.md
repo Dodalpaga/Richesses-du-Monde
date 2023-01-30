@@ -47,7 +47,7 @@ In order to run the application, follow the steps:
   otherwise, for simply running the project:
   `npm run start`
 - Open the browser and visit the following url:
-  `http://localhost:3000`
+  `http://localhost:3005`
 - Enter your name that you want to be displayed to others in the chat room.
 
 ### Results
