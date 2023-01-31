@@ -50,29 +50,27 @@
           <ul class="resultsArea" id="resultsArea"></ul>
         </div>
         <div id="transactions">
-          <div id="transactionsForm" class="box">
+          <div id="transactionsForm">
             <select name="player1" id="player1"></select>
-            <input
-              style="
-                margin-left: 10px;
-                width: 120px;
-                font-size: 24px;
-                text-align: center;
-              "
-              type="number"
-              id="amount"
-              name="amount"
-            />
-            <select
-              style="margin-left: 10px"
-              name="player2"
-              id="player2"
-            ></select>
+            <div style="margin: 10px">
+              <i
+                style="color: white; font-size: 24px"
+                class="fas fa-arrow-down"
+              ></i>
+              <input
+                style="width: 120px; font-size: 24px; text-align: center"
+                type="number"
+                id="amount"
+                name="amount"
+              />
+              <i
+                style="color: white; font-size: 24px"
+                class="fas fa-arrow-down"
+              ></i>
+            </div>
+            <select name="player2" id="player2"></select>
           </div>
-          <i
-            style="margin-left: 10px; color: white; font-size: 30px"
-            class="fas fa-arrow-right"
-          ></i>
+
           <br />
           <br />
           <button class="btn" type="submit" form="transactionsForm" id="submit">

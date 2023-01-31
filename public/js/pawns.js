@@ -41,7 +41,6 @@ $(window).resize(function () {
 });
 
 var GameLayer = new Konva.Layer();
-console.log(container.clientWidth);
 var radius = container.clientWidth / 60;
 
 function createPawn(client, id, x, y, color = "grey") {

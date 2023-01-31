@@ -41,11 +41,39 @@
 }
 
 #transactionsForm {
-  align-items: center;
-  justify-content: center;
-  max-height: 50%;
-  height: 50%;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#transactionsForm select {
+  display: block;
+  background: #0563af;
+  color: white;
+  padding: 12px;
+  width: 150px;
+  border: none;
+  font-size: 18px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
+
+#transactionsForm select option {
+  padding: 30px;
+}
+
+.btn {
+  width: 180px;
+  height: 60px;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid #91c9ff;
+  outline: none;
+  transition: 1s ease-in-out;
 }
 
 .roll-button {
@@ -70,33 +98,6 @@
 ul {
   list-style: none;
   word-wrap: break-word;
-}
-
-.box select {
-  background: #0563af;
-  color: white;
-  padding: 12px;
-  width: 200px;
-  border: none;
-  font-size: 18px;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-  -webkit-appearance: button;
-  appearance: button;
-  outline: none;
-}
-
-.box select option {
-  padding: 30px;
-}
-
-.btn {
-  width: 180px;
-  height: 60px;
-  cursor: pointer;
-  background: transparent;
-  border: 1px solid #91c9ff;
-  outline: none;
-  transition: 1s ease-in-out;
 }
 
 svg {

@@ -40,12 +40,10 @@ clientIO.on("removePawn", (id) => {
 });
 
 clientIO.on("removeCursor", (session_id) => {
-  console.log(session_id);
   let divToRemove = document.querySelector(
     '.pointer[session_id="' + session_id + '"]'
   );
   if (divToRemove) {
-    console.log("remove");
     divToRemove.parentNode.removeChild(divToRemove);
   }
 });
@@ -94,8 +92,8 @@ function outputPlayersList(playersList) {
   $("#player2").empty();
   var element1 = document.createElement("option");
   var element2 = document.createElement("option");
-  element1.innerText = "Select an option";
-  element2.innerText = "Select an option";
+  element1.innerText = "Select option";
+  element2.innerText = "Select option";
   element1.style.cssText =
     "background:#0563af;font-weight:bold;font-size:20px;";
   element2.style.cssText =
@@ -112,10 +110,8 @@ function outputPlayersList(playersList) {
     "background:#3d3d3d;font-weight:bold;font-size:20px;";
   playersList1.append(element1);
   playersList2.append(element2);
-  console.log(playersList["users"][0]);
   for (var i = 0; i < playersList["users"].length; i++) {
     let color = playersList["users"][i].color;
-    console.log(color);
     var element1 = document.createElement("option");
     var element2 = document.createElement("option");
     element1.innerText = playersList["users"][i].username;
@@ -133,7 +129,7 @@ function makeTransaction() {
   var player1 = document.getElementById("player1").value;
   var player2 = document.getElementById("player2").value;
   var amount = document.getElementById("amount").value;
-  if (player1 == "Select an option" || player2 == "Select an option") {
+  if (player1 == "Select option" || player2 == "Select option") {
     alert("Please select a player");
   } else if (player1 == player2) {
     alert("Please select different players");
@@ -146,8 +142,8 @@ function makeTransaction() {
       amount: amount,
     });
     document.getElementById("amount").value = "";
-    document.getElementById("player1").value = "Select an option";
-    document.getElementById("player2").value = "Select an option";
+    document.getElementById("player1").value = "Select option";
+    document.getElementById("player2").value = "Select option";
   }
 }
 

@@ -19,6 +19,8 @@ function resizeCards() {
   shapes.forEach(function (shape) {
     shape.x((shape.x() / previousX) * cardBoard.width());
     shape.y((shape.y() / previousY) * cardBoard.height());
+    shape.width(container.clientWidth / 6.5);
+    shape.height(container.clientWidth / 6.5 / 1.3706);
   });
 }
 
@@ -28,8 +30,8 @@ $(window).resize(function () {
 
 var CardsLayer = new Konva.Layer();
 
-var height = 200;
-var width = height * 1.3706;
+var width = container.clientWidth / 6.5;
+var height = width / 1.3706;
 
 function createCard(client, id, path, x, y) {
   var cardObj = new Image();
@@ -72,7 +74,6 @@ function createCard(client, id, path, x, y) {
 }
 
 function updateCards(card) {
-  console.log(card.id);
   var movedCard = cardBoard.findOne("#" + card.id);
   movedCard.x(card.coordinates.x * cardBoard.width());
   movedCard.y(card.coordinates.y * cardBoard.height());
