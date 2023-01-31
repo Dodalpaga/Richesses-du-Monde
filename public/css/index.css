@@ -33,13 +33,15 @@ p {
   word-break: break-all;
 }
 
-.btn {
+.mainButton {
   cursor: pointer;
   padding: 5px 15px;
   background: var(--light-color);
-  color: var(--dark-color-a);
+  color: var(--black-color-a);
   border: 0;
   font-size: 17px;
+  margin-top: 20px;
+  width: 100%;
 }
 /* Join Page */
 .join-container {
@@ -92,10 +94,6 @@ p {
   width: 100%;
 }
 
-.join-main .btn {
-  margin-top: 20px;
-  width: 100%;
-}
 .gw-title {
   text-align: center;
   text-transform: uppercase;
@@ -111,8 +109,11 @@ p {
   padding: 0.25em 0 0.325em;
   display: block;
   margin: 0 auto;
+  -webkit-text-stroke: 0.25px white;
   /* Clip Background Image */
-  background: url(https://i.ibb.co/RDTnNrT/animated-text-fill.png) repeat-y;
+  background: url(https://cdn.eso.org/images/thumb300y/uhd_img2534_babak_cc.jpg)
+    repeat-x;
+  filter: brightness(200%);
   -webkit-background-clip: text;
   background-clip: text;
   /* Animate Background Image */
@@ -135,20 +136,15 @@ p {
 .scrollingBG {
   position: absolute;
   content: "";
-  width: 200%;
-  height: 200%;
-  top: -50%;
-  left: -50%;
+  width: 100%;
+  height: 100%;
   z-index: -1;
   background-image: radial-gradient(
       circle,
-      rgba(230, 230, 230, 0.8) 30%,
+      rgba(230, 230, 230, 0.2) 0%,
       rgba(255, 255, 255, 0.8) 100%
     ),
-    url("../imgs/Seamless.png");
-  background-size: 50%;
-  filter: invert(100%);
-  transform: rotate(30deg);
+    url("../imgs/wallpaper.jpg");
 }
 
 @media (max-width: 1150px) {
