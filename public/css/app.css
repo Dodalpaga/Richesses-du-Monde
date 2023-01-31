@@ -6,6 +6,7 @@
   --light-color: #e6e9ff;
   --black-color-a: #292c38;
   --black-color-b: #1f222c;
+  --ratio: 0.73494983277591973244147157190635;
 }
 
 * {
@@ -143,11 +144,11 @@ input::-webkit-inner-spin-button {
 
 .left {
   width: 100%;
-  max-width: 1262px;
+  max-width: 65%;
 }
 
 .right {
-  width: calc(100% - 1262px);
+  width: 35%;
 }
 
 /* Clear floats after the columns */

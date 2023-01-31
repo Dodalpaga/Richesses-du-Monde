@@ -1,8 +1,9 @@
 var container = document.getElementById("game-container");
 var Game = new Konva.Stage({
+  id: "konva-game",
   container: "game-container",
   width: container.clientWidth,
-  height: container.clientHeight,
+  height: container.clientWidth * 0.73494983277591973244147157190635,
 });
 var previousX = Game.width();
 var previousY = Game.height();
@@ -10,22 +11,38 @@ var previousY = Game.height();
 function resizeBoard() {
   previousX = Game.width();
   previousY = Game.height();
-  Game.width(container.clientWidth);
-  Game.height(container.clientHeight);
+  if (
+    container.clientWidth * 0.73494983277591973244147157190635 >
+    container.clientHeight
+  ) {
+    Game.height(container.clientHeight);
+    Game.width(container.clientHeight * 1.3592233009708737864077669902913);
+  } else {
+    Game.width(container.clientWidth);
+    Game.height(container.clientWidth * 0.73494983277591973244147157190635);
+  }
   var shapes = Game.find("Circle");
 
   // apply transition to all nodes in the array
   shapes.forEach(function (shape) {
     shape.x((shape.x() / previousX) * Game.width());
     shape.y((shape.y() / previousY) * Game.height());
+    shape.radius(container.clientWidth / 60);
+    shape.strokeWidth(container.clientWidth / 300);
   });
 }
+
+window.onload = () => {
+  resizeBoard();
+};
+
 $(window).resize(function () {
   resizeBoard();
 });
 
 var GameLayer = new Konva.Layer();
-var radius = 20;
+console.log(container.clientWidth);
+var radius = container.clientWidth / 60;
 
 function createPawn(client, id, x, y, color = "grey") {
   var box = new Konva.Circle({
@@ -35,7 +52,7 @@ function createPawn(client, id, x, y, color = "grey") {
     radius: radius,
     fill: color,
     stroke: "black",
-    strokeWidth: 4,
+    strokeWidth: container.clientWidth / 300,
     draggable: true,
   });
 
