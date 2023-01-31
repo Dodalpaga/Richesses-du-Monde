@@ -50,7 +50,7 @@ p {
 
 .chat-container {
   background: #fff;
-  height: 200px;
+  height: 220px;
   width: 100%;
   overflow: hidden;
   margin: 0;
@@ -117,7 +117,7 @@ p {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 16px;
+  font-size: 24px;
   margin: 7px;
 }
 

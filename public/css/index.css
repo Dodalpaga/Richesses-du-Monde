@@ -104,7 +104,7 @@ p {
   padding: 1.5em 0em;
 }
 .gw-title span {
-  font: 700 4em/1 "Oswald", sans-serif;
+  font: 1000 4em/1 "Oswald", sans-serif;
   letter-spacing: 0;
   padding: 0.25em 0 0.325em;
   display: block;
@@ -113,7 +113,7 @@ p {
   /* Clip Background Image */
   background: url(https://cdn.eso.org/images/thumb300y/uhd_img2534_babak_cc.jpg)
     repeat-x;
-  filter: brightness(200%);
+  filter: brightness(150%) saturate(150%);
   -webkit-background-clip: text;
   background-clip: text;
   /* Animate Background Image */
