@@ -32,6 +32,7 @@ clientIO.on("updatePawns", (pawn) => {
 });
 
 clientIO.on("updateCards", (card) => {
+  console.log(card.coordinates.x, card.coordinates.y);
   updateCards(card);
 });
 
@@ -205,4 +206,32 @@ clientIO.on("user rolled", function (data) {
 //   $pointer.css("top", data.coords.y * window.innerHeight + 15);
 // });
 
-createCard(clientIO, "card1", "../imgs/card.png", 300, 300);
+var i = 0;
+
+function myLoop() {
+  //  create a loop function
+  setTimeout(function () {
+    //  call a 3s setTimeout when the loop is called
+    console.log("hello"); //  your code here
+    i++; //  increment the counter
+    if (i <= 72) {
+      //  if the counter < 10, call the loop function
+      createCard(
+        clientIO,
+        "card" + 2 * i - 2,
+        "../imgs/card.png",
+        0.66,
+        0.005 + (i - 1) * 0.0123
+      );
+      createCard(
+        clientIO,
+        "card" + 2 * i - 1,
+        "../imgs/card.png",
+        0.82,
+        0.005 + (i - 1) * 0.0123
+      ); //  ..  again which will trigger another
+      myLoop();
+    } //  ..  setTimeout()
+  }, 20);
+}
+myLoop();

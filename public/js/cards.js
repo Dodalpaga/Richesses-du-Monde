@@ -38,8 +38,8 @@ function createCard(client, id, path, x, y) {
   cardObj.onload = function () {
     var card = new Konva.Image({
       id: id,
-      x: x,
-      y: y,
+      x: x * cardBoard.width(),
+      y: y * cardBoard.height(),
       width: width,
       height: height,
       image: cardObj,
