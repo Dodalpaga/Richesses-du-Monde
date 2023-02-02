@@ -69,10 +69,10 @@ function createCard(client, id, path, x, y) {
       card.y(card.y() + card.height());
     });
     card.on("dragmove", () => {
-      card.y(Math.max(card.y(), 0));
-      card.y(Math.min(card.y(), card_stage.height() - card.height()));
-      card.x(Math.max(card.x(), 0));
-      card.x(Math.min(card.x(), card_stage.width() - card.width()));
+      card.y(Math.max(card.y(), -card.height()));
+      card.y(Math.min(card.y(), card_stage.height() - 2 * card.height()));
+      card.x(Math.max(card.x(), -card.width()));
+      card.x(Math.min(card.x(), card_stage.width() - 3 * card.width()));
     });
     card.on("dragend", () => {
       card.moveToTop();
