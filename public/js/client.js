@@ -212,24 +212,53 @@ function myLoop() {
   setTimeout(function () {
     //  call a 3s setTimeout when the loop is called
     i++; //  increment the counter
-    if (i <= 72) {
+    if (i <= 24) {
       //  if the counter < 10, call the loop function
       createCard(
         clientIO,
-        "card" + (2 * i - 2),
+        "card" + (6 * i - 1),
         "../imgs/card.png",
         0.66,
-        0.005 + (i - 1) * 0.0123
+        0.005 + (i - 1) * 0.04
       );
       createCard(
         clientIO,
-        "card" + (2 * i - 1),
+        "card" + 6 * i,
         "../imgs/card.png",
-        0.82,
-        0.005 + (i - 1) * 0.0123
-      ); //  ..  again which will trigger another
+        0.71,
+        0.005 + (i - 1) * 0.04
+      );
+      createCard(
+        clientIO,
+        "card" + (6 * i + 1),
+        "../imgs/card.png",
+        0.76,
+        0.005 + (i - 1) * 0.04
+      );
       myLoop();
-    } //  ..  setTimeout()
+      createCard(
+        clientIO,
+        "card" + (6 * i + 2),
+        "../imgs/card.png",
+        0.81,
+        0.005 + (i - 1) * 0.04
+      );
+      createCard(
+        clientIO,
+        "card" + (6 * i + 3),
+        "../imgs/card.png",
+        0.86,
+        0.005 + (i - 1) * 0.04
+      );
+      createCard(
+        clientIO,
+        "card" + (6 * i + 4),
+        "../imgs/card.png",
+        0.91,
+        0.005 + (i - 1) * 0.04
+      );
+      myLoop();
+    }
   }, 20);
 }
 myLoop();
