@@ -219,43 +219,43 @@ function myLoop() {
         "card" + (6 * i - 1),
         "../imgs/card.png",
         0.66,
-        0.005 + (i - 1) * 0.04
+        0.005 + (i - 1) * 0.05
       );
       createCard(
         clientIO,
         "card" + 6 * i,
         "../imgs/card.png",
-        0.71,
-        0.005 + (i - 1) * 0.04
+        0.72,
+        0.005 + (i - 1) * 0.05
       );
       createCard(
         clientIO,
         "card" + (6 * i + 1),
         "../imgs/card.png",
-        0.76,
-        0.005 + (i - 1) * 0.04
+        0.78,
+        0.005 + (i - 1) * 0.05
       );
       myLoop();
       createCard(
         clientIO,
         "card" + (6 * i + 2),
         "../imgs/card.png",
-        0.81,
-        0.005 + (i - 1) * 0.04
+        0.84,
+        0.005 + (i - 1) * 0.05
       );
       createCard(
         clientIO,
         "card" + (6 * i + 3),
         "../imgs/card.png",
-        0.86,
-        0.005 + (i - 1) * 0.04
+        0.9,
+        0.005 + (i - 1) * 0.05
       );
       createCard(
         clientIO,
         "card" + (6 * i + 4),
         "../imgs/card.png",
-        0.91,
-        0.005 + (i - 1) * 0.04
+        0.96,
+        0.005 + (i - 1) * 0.05
       );
       myLoop();
     }
