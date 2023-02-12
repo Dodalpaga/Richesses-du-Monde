@@ -1,5 +1,12 @@
 var socketIO = require("socket.io");
 var { userJoin, getCurrentUser, userLeave, getRoomUsers } = require("./users");
+var {
+  getRoomCards,
+  getCard,
+  createCard,
+  moveCard,
+  wipeCards,
+} = require("./cards");
 const userColors = ["#d9534f", "#5cb85c", "#5bc0de", "#f0ad4e"];
 const userCoordinates = [
   { x: 0.91, y: 0.9 },
@@ -31,6 +38,37 @@ function socketApp(server) {
           socket.join(room);
         }
       }
+      // If i am the first player in the room :
+      if (getRoomUsers(room).length === 0) {
+        // Wipe the board
+        wipeCards();
+        // Create the cards
+        var i = 0;
+        function myLoop() {
+          //  create a loop function
+          setTimeout(function () {
+            //  call a 3s setTimeout when the loop is called
+            i++; //  increment the counter
+            if (i <= 1) {
+              //24
+              //  if the counter < 10, call the loop function
+              for (var j = 0; j < 4; j++) {
+                //6
+                createCard(
+                  socket.room,
+                  "card" + (6 * i - 5 + j),
+                  "../imgs/card.png",
+                  0.66 + j * 0.06,
+                  0.005 + (i - 1) * 0.05
+                );
+              }
+              myLoop();
+            }
+          }, 20);
+        }
+        myLoop();
+      }
+
       const usedColors = getRoomUsers(room)
         .filter((user) => user.color)
         .map((user) => user.color);
@@ -55,7 +93,7 @@ function socketApp(server) {
         users: getRoomUsers(room),
       });
 
-      io.to(room).emit("playersList", {
+      io.to(room).emit("updatePlayers", {
         users: getRoomUsers(room),
       });
     });
@@ -73,13 +111,13 @@ function socketApp(server) {
     });
 
     socket.on("dragCard", (card) => {
-      const user = getCurrentUser(socket.id);
-      if (user) {
-        io.to(socket.room).emit("updateCards", {
-          id: card.id,
-          coordinates: { x: card.x, y: card.y },
-        });
-      }
+      console.log("Card from server : ", card);
+      moveCard(card.id, card.x, card.y);
+      io.to(socket.room).emit("updateCard", {
+        id: card.id,
+        x: card.x,
+        y: card.y,
+      });
     });
 
     socket.on("newPlayer", () => {
@@ -93,17 +131,26 @@ function socketApp(server) {
           },
           color: user.color,
         });
-        for (i = 0; i < getRoomUsers(socket.room).length; i++) {
-          if (getRoomUsers(socket.room)[i].id != user.id) {
+        for (player = 0; player < getRoomUsers(socket.room).length; player++) {
+          if (getRoomUsers(socket.room)[player].id != user.id) {
             socket.emit("newPlayer", {
-              id: getRoomUsers(socket.room)[i].id,
-              coordinates: getRoomUsers(socket.room)[i].coordinates,
-              color: getRoomUsers(socket.room)[i].color,
+              id: getRoomUsers(socket.room)[player].id,
+              coordinates: getRoomUsers(socket.room)[player].coordinates,
+              color: getRoomUsers(socket.room)[player].color,
             });
           }
           io.to(socket.room).emit("updatePawns", {
-            id: getRoomUsers(socket.room)[i].id,
-            coordinates: getRoomUsers(socket.room)[i].coordinates,
+            id: getRoomUsers(socket.room)[player].id,
+            coordinates: getRoomUsers(socket.room)[player].coordinates,
+          });
+        }
+        for (i = 0; i < getRoomCards(socket.room).length; i++) {
+          var card = getRoomCards(socket.room)[i];
+          socket.emit("updateCard", {
+            id: card.id,
+            ImgPath: card.ImgPath,
+            x: card.x,
+            y: card.y,
           });
         }
       }
@@ -187,7 +234,7 @@ function socketApp(server) {
           room: user.room,
           users: getRoomUsers(user.room),
         });
-        io.to(user.room).emit("playersList", {
+        io.to(user.room).emit("updatePlayers", {
           users: getRoomUsers(user.room),
         });
 

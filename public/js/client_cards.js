@@ -86,18 +86,18 @@ function createCard(client, id, path, x, y) {
         y: card.y() / card_stage.height(),
       });
     });
-
     card_layer.add(card);
     card_stage.add(card_layer);
   };
   cardObj.src = path;
 }
 
-function updateCards(card) {
+function updateCard(card) {
+  console.log("Card from client :", card);
   var movedCard = card_stage.findOne("#" + card.id);
-  movedCard.x(card.coordinates.x * card_stage.width());
-  movedCard.y(card.coordinates.y * card_stage.height());
+  movedCard.x(card.x * card_stage.width());
+  movedCard.y(card.y * card_stage.height());
   card_stage.add(card_layer);
 }
 
-export { createCard, updateCards };
+export { createCard, updateCard };

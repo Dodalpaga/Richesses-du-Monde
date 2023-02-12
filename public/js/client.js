@@ -1,6 +1,6 @@
 const clientIO = io();
 import { createPawn, updatePawns, removePawn } from "./pawns.js";
-import { createCard, updateCards } from "./cards.js";
+import { createCard, updateCard } from "./client_cards.js";
 var $rollButton = $(".roll-button"); // The roll dice button
 var $diceResults = $(".resultsArea"); // The dice roll results div
 const { username, room } = Qs.parse(window.location.search, {
@@ -29,10 +29,6 @@ clientIO.on("newPlayer", (data) => {
 
 clientIO.on("updatePawns", (pawn) => {
   updatePawns(pawn);
-});
-
-clientIO.on("updateCards", (card) => {
-  updateCards(card);
 });
 
 clientIO.on("removePawn", (id) => {
@@ -66,15 +62,6 @@ clientIO.on("roomFull", () => {
 clientIO.on("roomUsers", (roomDetails) => {
   outputRoomDetails(roomDetails);
 });
-
-clientIO.on("playersList", (playersList) => {
-  outputPlayersList(playersList);
-});
-
-clientIO.on("shareTransaction", (transaction) => {
-  shareTransaction(transaction);
-});
-
 function outputRoomDetails(roomDetails) {
   document.getElementById("room-name").innerText = roomDetails.room;
   document.getElementById("users").innerHTML = `${roomDetails.users
@@ -85,6 +72,9 @@ function outputRoomDetails(roomDetails) {
     .join("")}`;
 }
 
+clientIO.on("updatePlayers", (playersList) => {
+  outputPlayersList(playersList);
+});
 function outputPlayersList(playersList) {
   var playersList1 = document.getElementById("player1");
   var playersList2 = document.getElementById("player2");
@@ -125,6 +115,40 @@ function outputPlayersList(playersList) {
   }
 }
 
+clientIO.on("updateCard", (card) => {
+  updateCard(card);
+});
+
+clientIO.on("shareTransaction", (transaction) => {
+  shareTransaction(transaction);
+});
+function shareTransaction(transaction) {
+  var $el = $("<li style='height:10px'>").text(" ");
+  $diceResults.prepend($el);
+  var $el = $("<li>").text(
+    transaction.maker +
+      " " +
+      "made a transaction : " +
+      transaction.player1 +
+      " gave " +
+      transaction.player2 +
+      " " +
+      transaction.amount +
+      " $"
+  );
+  $diceResults.prepend($el);
+}
+
+clientIO.on("user rolled", function (data) {
+  logDice(data.username + " rolled: " + data.roll);
+});
+function logDice(message) {
+  var $el = $("<li style='height:10px'>").text(" ");
+  $diceResults.prepend($el);
+  var $el = $("<li>").text(message);
+  $diceResults.prepend($el);
+}
+
 function makeTransaction() {
   var player1 = document.getElementById("player1").value;
   var player2 = document.getElementById("player2").value;
@@ -147,38 +171,10 @@ function makeTransaction() {
   }
 }
 
-function shareTransaction(transaction) {
-  var $el = $("<li style='height:10px'>").text(" ");
-  $diceResults.prepend($el);
-  var $el = $("<li>").text(
-    transaction.maker +
-      " " +
-      "made a transaction : " +
-      transaction.player1 +
-      " gave " +
-      transaction.player2 +
-      " " +
-      transaction.amount +
-      " $"
-  );
-  $diceResults.prepend($el);
-}
-
 document.getElementById("submit").addEventListener("click", makeTransaction);
 
 $rollButton.click(function () {
   clientIO.emit("roll user");
-});
-
-function logDice(message) {
-  var $el = $("<li style='height:10px'>").text(" ");
-  $diceResults.prepend($el);
-  var $el = $("<li>").text(message);
-  $diceResults.prepend($el);
-}
-
-clientIO.on("user rolled", function (data) {
-  logDice(data.username + " rolled: " + data.roll);
 });
 
 // $(document).on("mousemove", function (e) {
@@ -212,51 +208,19 @@ function myLoop() {
   setTimeout(function () {
     //  call a 3s setTimeout when the loop is called
     i++; //  increment the counter
-    if (i <= 24) {
+    if (i <= 1) {
+      //24
       //  if the counter < 10, call the loop function
-      createCard(
-        clientIO,
-        "card" + (6 * i - 1),
-        "../imgs/card.png",
-        0.66,
-        0.005 + (i - 1) * 0.05
-      );
-      createCard(
-        clientIO,
-        "card" + 6 * i,
-        "../imgs/card.png",
-        0.72,
-        0.005 + (i - 1) * 0.05
-      );
-      createCard(
-        clientIO,
-        "card" + (6 * i + 1),
-        "../imgs/card.png",
-        0.78,
-        0.005 + (i - 1) * 0.05
-      );
-      myLoop();
-      createCard(
-        clientIO,
-        "card" + (6 * i + 2),
-        "../imgs/card.png",
-        0.84,
-        0.005 + (i - 1) * 0.05
-      );
-      createCard(
-        clientIO,
-        "card" + (6 * i + 3),
-        "../imgs/card.png",
-        0.9,
-        0.005 + (i - 1) * 0.05
-      );
-      createCard(
-        clientIO,
-        "card" + (6 * i + 4),
-        "../imgs/card.png",
-        0.96,
-        0.005 + (i - 1) * 0.05
-      );
+      for (var j = 0; j < 4; j++) {
+        //6
+        createCard(
+          clientIO,
+          "card" + (6 * i - 5 + j),
+          "../imgs/card.png",
+          0.66 + j * 0.06,
+          0.005 + (i - 1) * 0.05
+        );
+      }
       myLoop();
     }
   }, 20);
