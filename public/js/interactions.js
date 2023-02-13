@@ -1,3 +1,4 @@
+var $diceResults = $(".resultsArea"); // The dice roll results div
 function logDice(message) {
   var $el = $("<li style='height:10px'>").text(" ");
   $diceResults.prepend($el);
@@ -44,7 +45,7 @@ function outputPlayersList(playersList) {
     playersList2.append(element2);
   }
 }
-var $diceResults = $(".resultsArea"); // The dice roll results div
+
 function shareTransaction(transaction) {
   var $el = $("<li style='height:10px'>").text(" ");
   $diceResults.prepend($el);
