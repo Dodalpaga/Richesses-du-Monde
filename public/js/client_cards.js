@@ -11,7 +11,7 @@ card_stage.add(card_layer);
 var previousX = card_stage.width();
 var previousY = card_stage.height();
 
-var ratio = 10;
+var ratio = 9;
 var width = container.clientWidth / ratio;
 var height = width / 1.3706;
 

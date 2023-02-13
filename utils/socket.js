@@ -119,7 +119,6 @@ function socketApp(server) {
         }
         for (i = 0; i < getRoomCards(socket.room).length; i++) {
           var card = getRoomCards(socket.room)[i];
-          console.log(card);
           socket.emit("createCard", {
             id: card.id,
             ImgPath: card.ImgPath,
