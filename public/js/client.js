@@ -1,8 +1,13 @@
 const clientIO = io();
 import { createPawn, updatePawns, removePawn } from "./pawns.js";
 import { createCard, updateCard } from "./client_cards.js";
+import {
+  logDice,
+  outputPlayersList,
+  shareTransaction,
+  outputRoomDetails,
+} from "./interactions.js";
 var $rollButton = $(".roll-button"); // The roll dice button
-var $diceResults = $(".resultsArea"); // The dice roll results div
 const { username, room } = Qs.parse(window.location.search, {
   ignoreQueryPrefix: true,
 });
@@ -62,58 +67,10 @@ clientIO.on("roomFull", () => {
 clientIO.on("roomUsers", (roomDetails) => {
   outputRoomDetails(roomDetails);
 });
-function outputRoomDetails(roomDetails) {
-  document.getElementById("room-name").innerText = roomDetails.room;
-  document.getElementById("users").innerHTML = `${roomDetails.users
-    .map(
-      (user) =>
-        `<p><i class="fas fa-dot-circle" style="color:${user.color}"></i> ${user.username}<br>(${user.money} $)</p>`
-    )
-    .join("")}`;
-}
 
 clientIO.on("updatePlayers", (playersList) => {
   outputPlayersList(playersList);
 });
-function outputPlayersList(playersList) {
-  var playersList1 = document.getElementById("player1");
-  var playersList2 = document.getElementById("player2");
-  $("#player1").empty();
-  $("#player2").empty();
-  var element1 = document.createElement("option");
-  var element2 = document.createElement("option");
-  element1.innerText = "Select option";
-  element2.innerText = "Select option";
-  element1.style.cssText =
-    "background:#0563af;font-weight:bold;font-size:20px;";
-  element2.style.cssText =
-    "background:#0563af;font-weight:bold;font-size:20px;";
-  playersList1.append(element1);
-  playersList2.append(element2);
-  var element1 = document.createElement("option");
-  var element2 = document.createElement("option");
-  element1.innerText = "BANK";
-  element2.innerText = "BANK";
-  element1.style.cssText =
-    "background:#3d3d3d;font-weight:bold;font-size:20px;";
-  element2.style.cssText =
-    "background:#3d3d3d;font-weight:bold;font-size:20px;";
-  playersList1.append(element1);
-  playersList2.append(element2);
-  for (var i = 0; i < playersList["users"].length; i++) {
-    let color = playersList["users"][i].color;
-    var element1 = document.createElement("option");
-    var element2 = document.createElement("option");
-    element1.innerText = playersList["users"][i].username;
-    element2.innerText = playersList["users"][i].username;
-    element1.style.cssText =
-      "background:" + color + ";font-weight:bold;font-size:20px;";
-    element2.style.cssText =
-      "background:" + color + ";font-weight:bold;font-size:20px;";
-    playersList1.append(element1);
-    playersList2.append(element2);
-  }
-}
 
 clientIO.on("updateCard", (card) => {
   updateCard(card);
@@ -126,32 +83,10 @@ clientIO.on("createCard", (card) => {
 clientIO.on("shareTransaction", (transaction) => {
   shareTransaction(transaction);
 });
-function shareTransaction(transaction) {
-  var $el = $("<li style='height:10px'>").text(" ");
-  $diceResults.prepend($el);
-  var $el = $("<li>").text(
-    transaction.maker +
-      " " +
-      "made a transaction : " +
-      transaction.player1 +
-      " gave " +
-      transaction.player2 +
-      " " +
-      transaction.amount +
-      " $"
-  );
-  $diceResults.prepend($el);
-}
 
 clientIO.on("user rolled", function (data) {
   logDice(data.username + " rolled: " + data.roll);
 });
-function logDice(message) {
-  var $el = $("<li style='height:10px'>").text(" ");
-  $diceResults.prepend($el);
-  var $el = $("<li>").text(message);
-  $diceResults.prepend($el);
-}
 
 function makeTransaction() {
   var player1 = document.getElementById("player1").value;
@@ -174,8 +109,37 @@ function makeTransaction() {
     document.getElementById("player2").value = "Select option";
   }
 }
+// Create a function so that the news can be displayed on the page when news-button is clicked
 
-document.getElementById("submit").addEventListener("click", makeTransaction);
+function displayNews() {
+  var newsArray = [
+    { title: "News 1", content: "Content 1" },
+    { title: "News 2", content: "Content 2" },
+  ];
+  // Create a variable to store the news
+  // Create a for loop to loop through the news array
+  const random = Math.floor(Math.random() * newsArray.length);
+  var news = "";
+
+  // Create a variable to store the news
+  news =
+    news +
+    "<div class='news-item' style='text-align:center'><h3>" +
+    newsArray[random].title +
+    "</h3><p>" +
+    newsArray[random].content +
+    "</p></div>";
+
+  console.log(news);
+
+  // Display the news on the page
+  document.getElementById("newsArea").innerHTML = news;
+}
+
+document.getElementById("news-button").addEventListener("click", displayNews);
+document
+  .getElementById("submitTransaction")
+  .addEventListener("click", makeTransaction);
 
 $rollButton.click(function () {
   clientIO.emit("roll user");

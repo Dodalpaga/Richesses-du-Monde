@@ -151,6 +151,15 @@ input::-webkit-inner-spin-button {
   width: 35%;
 }
 
+.left2 {
+  width: 100%;
+  max-width: 40%;
+}
+
+.right2 {
+  width: 60%;
+}
+
 /* Clear floats after the columns */
 .row:after {
   content: "";
