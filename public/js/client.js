@@ -119,6 +119,10 @@ clientIO.on("updateCard", (card) => {
   updateCard(card);
 });
 
+clientIO.on("createCard", (card) => {
+  createCard(clientIO, card.id, card.ImgPath, card.x, card.y);
+});
+
 clientIO.on("shareTransaction", (transaction) => {
   shareTransaction(transaction);
 });
@@ -200,29 +204,3 @@ $rollButton.click(function () {
 //   $pointer.css("left", data.coords.x * window.innerWidth + 15);
 //   $pointer.css("top", data.coords.y * window.innerHeight + 15);
 // });
-
-var i = 0;
-
-function myLoop() {
-  //  create a loop function
-  setTimeout(function () {
-    //  call a 3s setTimeout when the loop is called
-    i++; //  increment the counter
-    if (i <= 1) {
-      //24
-      //  if the counter < 10, call the loop function
-      for (var j = 0; j < 4; j++) {
-        //6
-        createCard(
-          clientIO,
-          "card" + (6 * i - 5 + j),
-          "../imgs/card.png",
-          0.66 + j * 0.06,
-          0.005 + (i - 1) * 0.05
-        );
-      }
-      myLoop();
-    }
-  }, 20);
-}
-myLoop();

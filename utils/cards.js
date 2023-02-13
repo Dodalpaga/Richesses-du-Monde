@@ -5,16 +5,8 @@ function createCard(room, id, ImgPath, x, y) {
   cards.push(card);
 }
 
-function getCard(id) {
-  return cards.find((card) => card.id === id);
-}
-
-function moveCard(id, x, y) {
-  var movedCard = getCard(id);
-  if (movedCard) {
-    movedCard.x = x;
-    movedCard.y = y;
-  }
+function getCard(room, id) {
+  return cards.find((card) => card.room === room && card.id === id);
 }
 
 function getRoomCards(room) {
@@ -22,13 +14,21 @@ function getRoomCards(room) {
   return current_cards;
 }
 
-function wipeCards() {
-  cards = [];
+function moveCard(room, id, x, y) {
+  var movedCard = getCard(room, id);
+  if (movedCard) {
+    movedCard.x = x;
+    movedCard.y = y;
+  }
+}
+
+function wipeCards(room) {
+  // Remove all cards from a room
+  cards = cards.filter((card) => card.room !== room);
 }
 
 module.exports = {
   createCard,
-  getCard,
   moveCard,
   getRoomCards,
   wipeCards,

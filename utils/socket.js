@@ -1,12 +1,7 @@
 var socketIO = require("socket.io");
 var { userJoin, getCurrentUser, userLeave, getRoomUsers } = require("./users");
-var {
-  getRoomCards,
-  getCard,
-  createCard,
-  moveCard,
-  wipeCards,
-} = require("./cards");
+var { getRoomCards, createCard, moveCard, wipeCards } = require("./cards");
+var { createDisposition } = require("./disposition");
 const userColors = ["#d9534f", "#5cb85c", "#5bc0de", "#f0ad4e"];
 const userCoordinates = [
   { x: 0.91, y: 0.9 },
@@ -41,32 +36,9 @@ function socketApp(server) {
       // If i am the first player in the room :
       if (getRoomUsers(room).length === 0) {
         // Wipe the board
-        wipeCards();
+        wipeCards(socket.room);
         // Create the cards
-        var i = 0;
-        function myLoop() {
-          //  create a loop function
-          setTimeout(function () {
-            //  call a 3s setTimeout when the loop is called
-            i++; //  increment the counter
-            if (i <= 1) {
-              //24
-              //  if the counter < 10, call the loop function
-              for (var j = 0; j < 4; j++) {
-                //6
-                createCard(
-                  socket.room,
-                  "card" + (6 * i - 5 + j),
-                  "../imgs/card.png",
-                  0.66 + j * 0.06,
-                  0.005 + (i - 1) * 0.05
-                );
-              }
-              myLoop();
-            }
-          }, 20);
-        }
-        myLoop();
+        createDisposition(socket);
       }
 
       const usedColors = getRoomUsers(room)
@@ -112,9 +84,10 @@ function socketApp(server) {
 
     socket.on("dragCard", (card) => {
       console.log("Card from server : ", card);
-      moveCard(card.id, card.x, card.y);
+      moveCard(socket.room, card.id, card.x, card.y);
       io.to(socket.room).emit("updateCard", {
         id: card.id,
+        ImgPath: card.ImgPath,
         x: card.x,
         y: card.y,
       });
@@ -146,7 +119,8 @@ function socketApp(server) {
         }
         for (i = 0; i < getRoomCards(socket.room).length; i++) {
           var card = getRoomCards(socket.room)[i];
-          socket.emit("updateCard", {
+          console.log(card);
+          socket.emit("createCard", {
             id: card.id,
             ImgPath: card.ImgPath,
             x: card.x,

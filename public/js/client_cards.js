@@ -11,7 +11,7 @@ card_stage.add(card_layer);
 var previousX = card_stage.width();
 var previousY = card_stage.height();
 
-var ratio = 15;
+var ratio = 10;
 var width = container.clientWidth / ratio;
 var height = width / 1.3706;
 
@@ -82,6 +82,7 @@ function createCard(client, id, path, x, y) {
       card.y(card.y() + card.height());
       client.emit("dragCard", {
         id: card.id(),
+        ImgPath: path,
         x: card.x() / card_stage.width(),
         y: card.y() / card_stage.height(),
       });
