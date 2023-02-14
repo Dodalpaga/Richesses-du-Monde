@@ -12,10 +12,10 @@ const userCoordinates = [
 
 function socketApp(server) {
   const io = socketIO(server);
-  io.eio.pingInterval = 5000;
-  io.eio.pingTimeout = 120000;
-  io.set("heartbeat timeout", 120000);
-  io.set("heartbeat interval", 5000);
+  // io.eio.pingInterval = 5000;
+  // io.eio.pingTimeout = 120000;
+  // io.set("heartbeat timeout", 120000);
+  // io.set("heartbeat interval", 5000);
   io.on("connection", (socket) => {
     // Listen to join event
     socket.on("join", ({ username, room }) => {
@@ -204,7 +204,7 @@ function socketApp(server) {
     socket.on("disconnect", (reason) => {
       const user = userLeave(socket.id);
       if (user) {
-        socket.emit("disconnect", reason);
+        socket.disconnect(reason);
         console.log("Disconnected " + user.username + " : " + reason);
         // Emit list of users and room in the chat room
         io.to(user.room).emit("roomUsers", {
