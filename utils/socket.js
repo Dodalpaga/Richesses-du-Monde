@@ -11,11 +11,11 @@ const userCoordinates = [
 ];
 
 function socketApp(server) {
-  const io = socketIO(server);
-  // io.eio.pingInterval = 5000;
-  // io.eio.pingTimeout = 120000;
-  // io.set("heartbeat timeout", 120000);
-  // io.set("heartbeat interval", 5000);
+  const io = socketIO(server, {
+    upgrades: ["websocket"],
+    pingInterval: 2000,
+    pingTimeout: 5000,
+  });
   io.on("connection", (socket) => {
     // Listen to join event
     socket.on("join", ({ username, room }) => {
@@ -202,7 +202,7 @@ function socketApp(server) {
 
     // When client disconnects
     socket.on("disconnect", (reason) => {
-    console.log(reason)
+      console.log(reason);
       const user = userLeave(socket.id);
       if (user) {
         socket.disconnect(reason);
