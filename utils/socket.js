@@ -202,6 +202,7 @@ function socketApp(server) {
 
     // When client disconnects
     socket.on("disconnect", (reason) => {
+    console.log(reason)
       const user = userLeave(socket.id);
       if (user) {
         socket.disconnect(reason);
