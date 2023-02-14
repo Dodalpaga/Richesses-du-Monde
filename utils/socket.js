@@ -12,6 +12,10 @@ const userCoordinates = [
 
 function socketApp(server) {
   const io = socketIO(server);
+  io.eio.pingInterval = 5000;
+  io.eio.pingTimeout = 120000;
+  io.set("heartbeat timeout", 120000);
+  io.set("heartbeat interval", 5000);
   io.on("connection", (socket) => {
     // Listen to join event
     socket.on("join", ({ username, room }) => {
