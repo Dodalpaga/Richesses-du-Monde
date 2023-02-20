@@ -72,7 +72,7 @@ function createCard(client, id, path, x, y) {
       card.y(Math.max(card.y(), -card.height()));
       card.y(Math.min(card.y(), card_stage.height() - 2 * card.height()));
       card.x(Math.max(card.x(), -card.width()));
-      card.x(Math.min(card.x(), card_stage.width() - 3 * card.width()));
+      card.x(Math.min(card.x(), card_stage.width() - 2 * card.width()));
     });
     card.on("dragend", () => {
       card.moveToTop();
