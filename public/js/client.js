@@ -1,4 +1,7 @@
-const clientIO = io();
+const clientIO = io({
+  reconnectionDelay: 10000, // defaults to 1000
+  reconnectionDelayMax: 10000, // defaults to 5000;
+});
 import { createPawn, updatePawns, removePawn } from "./pawns.js";
 import { createCard, updateCard } from "./client_cards.js";
 import {
@@ -19,6 +22,14 @@ document.getElementById("greet-user").innerText = `${username}`;
 clientIO.on("connect", () => {
   console.log("Connected to server...");
   clientIO.emit("newPlayer");
+  console.log("recovered?", socket.recovered);
+
+  setTimeout(() => {
+    if (socket.io.engine) {
+      // close the low-level connection and trigger a reconnection
+      socket.io.engine.close();
+    }
+  }, 10000);
 });
 
 clientIO.on("newPlayer", (data) => {

@@ -13,8 +13,8 @@ const userCoordinates = [
 function socketApp(server) {
   const io = socketIO(server, {
     upgrades: ["websocket"],
-    pingInterval: 2000,
-    pingTimeout: 5000,
+    pingInterval: 10000,
+    pingTimeout: 100000,
   });
   io.on("connection", (socket) => {
     // Listen to join event
@@ -202,7 +202,6 @@ function socketApp(server) {
 
     // When client disconnects
     socket.on("disconnect", (reason) => {
-      console.log(reason);
       const user = userLeave(socket.id);
       if (user) {
         socket.disconnect(reason);
