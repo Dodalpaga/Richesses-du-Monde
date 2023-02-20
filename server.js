@@ -4,7 +4,9 @@ const express = require("express");
 let app = express();
 app.use(express.static(path.join(__dirname, "public")));
 const server = http.createServer(app);
-const io = require("socket.io")(server);
+const io = require("socket.io")(server, {
+  transports: ["polling"],
+});
 
 var {
   userJoin,

@@ -1,7 +1,6 @@
 const clientIO = io({
-  transports: ["polling"],
-  pingTimeout: 60000,
-  pingInterval: 25000,
+  pingTimeout: 30000,
+  pingInterval: 10000,
 });
 import { createPawn, updatePawns, removePawn } from "./pawns.js";
 import { createCard, updateCard } from "./client_cards.js";
