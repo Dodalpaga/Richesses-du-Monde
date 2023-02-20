@@ -22,7 +22,6 @@ document.getElementById("greet-user").innerText = `${username}`;
 clientIO.on("connect", () => {
   console.log("Connected to server...");
   clientIO.emit("newPlayer");
-  console.log("recovered?", socket.recovered);
 
   setTimeout(() => {
     if (socket.io.engine) {

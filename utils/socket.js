@@ -209,7 +209,6 @@ function socketApp(server) {
         io.to(user.room).emit("updatePlayers", {
           users: getRoomUsers(user.room),
         });
-
         io.to(user.room).emit("removePawn", (id = user.id));
         io.to(user.room).emit("removeCursor", (session_id = client.id));
       }
