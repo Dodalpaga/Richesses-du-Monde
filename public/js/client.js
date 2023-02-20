@@ -1,7 +1,4 @@
-const clientIO = io({
-  reconnectionDelay: 10000, // defaults to 1000
-  reconnectionDelayMax: 10000, // defaults to 5000;
-});
+const clientIO = io({ transports: ["websocket"] });
 import { createPawn, updatePawns, removePawn } from "./pawns.js";
 import { createCard, updateCard } from "./client_cards.js";
 import {
