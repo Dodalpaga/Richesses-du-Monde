@@ -1,4 +1,3 @@
-var socketIO = require("socket.io");
 var { userJoin, getCurrentUser, userLeave, getRoomUsers } = require("./users");
 var { getRoomCards, createCard, moveCard, wipeCards } = require("./cards");
 var { createDisposition } = require("./disposition");
@@ -11,19 +10,15 @@ const userCoordinates = [
 ];
 
 function socketApp(server) {
-  const io = socketIO(server, {
-    upgrades: ["websocket"],
-    pingInterval: 10000,
-    pingTimeout: 100000,
-  });
-  io.on("connection", (socket) => {
+  const io = require("socket.io")(server);
+  io.on("connection", (client) => {
     // Listen to join event
-    socket.on("join", ({ username, room }) => {
-      socket.room = room;
+    client.on("join", ({ username, room }) => {
+      client.room = room;
 
       // If username if not yet used in the room, and if the room is not full and if the game has already started join the room
       if (getRoomUsers(room).length >= 4) {
-        socket.emit("roomFull");
+        client.emit("roomFull");
         return;
       } else {
         if (
@@ -31,18 +26,18 @@ function socketApp(server) {
             (ppl) => ppl.username === username && ppl.room === room
           )
         ) {
-          socket.emit("usernameAlreadyUsed");
+          client.emit("usernameAlreadyUsed");
           return;
         } else {
-          socket.join(room);
+          client.join(room);
         }
       }
       // If i am the first player in the room :
       if (getRoomUsers(room).length === 0) {
         // Wipe the board
-        wipeCards(socket.room);
+        wipeCards(client.room);
         // Create the cards
-        createDisposition(socket);
+        createDisposition(client);
       }
 
       const usedColors = getRoomUsers(room)
@@ -54,7 +49,7 @@ function socketApp(server) {
       const userColor = availableColors[0];
       const userCoords = userCoordinates[getRoomUsers(room).length];
       const user = userJoin(
-        socket.id,
+        client.id,
         username,
         room,
         (money = 17500000),
@@ -74,22 +69,22 @@ function socketApp(server) {
       });
     });
 
-    socket.on("dragPawn", (pawn) => {
-      const user = getCurrentUser(socket.id);
+    client.on("dragPawn", (pawn) => {
+      const user = getCurrentUser(client.id);
       if (user) {
         user.coordinates.x = pawn.x;
         user.coordinates.y = pawn.y;
-        io.to(socket.room).emit("updatePawns", {
+        io.to(client.room).emit("updatePawns", {
           id: pawn.id,
           coordinates: user.coordinates,
         });
       }
     });
 
-    socket.on("dragCard", (card) => {
+    client.on("dragCard", (card) => {
       console.log("Card from server : ", card);
-      moveCard(socket.room, card.id, card.x, card.y);
-      io.to(socket.room).emit("updateCard", {
+      moveCard(client.room, card.id, card.x, card.y);
+      io.to(client.room).emit("updateCard", {
         id: card.id,
         ImgPath: card.ImgPath,
         x: card.x,
@@ -97,8 +92,8 @@ function socketApp(server) {
       });
     });
 
-    socket.on("newPlayer", () => {
-      const user = getCurrentUser(socket.id);
+    client.on("newPlayer", () => {
+      const user = getCurrentUser(client.id);
       if (user) {
         io.to(user.room).emit("newPlayer", {
           id: user.id,
@@ -108,22 +103,22 @@ function socketApp(server) {
           },
           color: user.color,
         });
-        for (player = 0; player < getRoomUsers(socket.room).length; player++) {
-          if (getRoomUsers(socket.room)[player].id != user.id) {
-            socket.emit("newPlayer", {
-              id: getRoomUsers(socket.room)[player].id,
-              coordinates: getRoomUsers(socket.room)[player].coordinates,
-              color: getRoomUsers(socket.room)[player].color,
+        for (player = 0; player < getRoomUsers(client.room).length; player++) {
+          if (getRoomUsers(client.room)[player].id != user.id) {
+            client.emit("newPlayer", {
+              id: getRoomUsers(client.room)[player].id,
+              coordinates: getRoomUsers(client.room)[player].coordinates,
+              color: getRoomUsers(client.room)[player].color,
             });
           }
-          io.to(socket.room).emit("updatePawns", {
-            id: getRoomUsers(socket.room)[player].id,
-            coordinates: getRoomUsers(socket.room)[player].coordinates,
+          io.to(client.room).emit("updatePawns", {
+            id: getRoomUsers(client.room)[player].id,
+            coordinates: getRoomUsers(client.room)[player].coordinates,
           });
         }
-        for (i = 0; i < getRoomCards(socket.room).length; i++) {
-          var card = getRoomCards(socket.room)[i];
-          socket.emit("createCard", {
+        for (i = 0; i < getRoomCards(client.room).length; i++) {
+          var card = getRoomCards(client.room)[i];
+          client.emit("createCard", {
             id: card.id,
             ImgPath: card.ImgPath,
             x: card.x,
@@ -133,21 +128,21 @@ function socketApp(server) {
       }
     });
 
-    // socket.on("mouse_activity", (data) => {
-    //   const user = getCurrentUser(socket.id);
+    // client.on("mouse_activity", (data) => {
+    //   const user = getCurrentUser(client.id);
     //   if (user) {
-    //     socket.broadcast.emit("all_mouse_activity", {
-    //       session_id: socket.id,
+    //     client.broadcast.emit("all_mouse_activity", {
+    //       session_id: client.id,
     //       coords: data,
     //       color: user.color,
     //     });
     //   }
     // });
 
-    socket.on("makeTransaction", (transaction) => {
-      const user = getCurrentUser(socket.id);
+    client.on("makeTransaction", (transaction) => {
+      const user = getCurrentUser(client.id);
       if (user) {
-        getRoomUsers(socket.room).forEach((user) => {
+        getRoomUsers(client.room).forEach((user) => {
           if (user.username == transaction.player1) {
             user.money = parseInt(user.money) - parseInt(transaction.amount);
           }
@@ -186,25 +181,25 @@ function socketApp(server) {
       }
     });
 
-    socket.on("roll user", () => {
+    client.on("roll user", () => {
       var roll = Math.floor(Math.random() * 6) + 1;
-      const user = getCurrentUser(socket.id);
+      const user = getCurrentUser(client.id);
       if (user) {
         var rollData = {
           username: user.username,
           roll: roll,
         };
 
-        socket.emit("user rolled", rollData);
-        socket.broadcast.emit("user rolled", rollData);
+        client.emit("user rolled", rollData);
+        client.broadcast.emit("user rolled", rollData);
       }
     });
 
     // When client disconnects
-    socket.on("disconnect", (reason) => {
-      const user = userLeave(socket.id);
+    client.on("disconnect", (reason) => {
+      const user = userLeave(client.id);
       if (user) {
-        socket.disconnect(reason);
+        client.disconnect(reason);
         console.log("Disconnected " + user.username + " : " + reason);
         // Emit list of users and room in the chat room
         io.to(user.room).emit("roomUsers", {
@@ -216,7 +211,7 @@ function socketApp(server) {
         });
 
         io.to(user.room).emit("removePawn", (id = user.id));
-        io.to(user.room).emit("removeCursor", (session_id = socket.id));
+        io.to(user.room).emit("removeCursor", (session_id = client.id));
       }
     });
   });
