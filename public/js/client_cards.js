@@ -27,7 +27,7 @@ function resizeCards() {
     shape.x((shape.x() / previousX) * card_stage.width());
     shape.y((shape.y() / previousY) * card_stage.height());
     shape.width(container.clientWidth / ratio);
-    shape.height(container.clientWidth / ratio / 1.3706);
+    shape.height((container.clientWidth / ratio) * (1409 / 1838));
   });
 }
 

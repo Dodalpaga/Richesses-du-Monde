@@ -22,13 +22,6 @@ document.getElementById("greet-user").innerText = `${username}`;
 clientIO.on("connect", () => {
   console.log("Connected to server...");
   clientIO.emit("newPlayer");
-
-  setTimeout(() => {
-    if (socket.io.engine) {
-      // close the low-level connection and trigger a reconnection
-      socket.io.engine.close();
-    }
-  }, 10000);
 });
 
 clientIO.on("newPlayer", (data) => {

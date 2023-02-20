@@ -151,13 +151,13 @@ input::-webkit-inner-spin-button {
   width: 35%;
 }
 
-.left2 {
-  width: 100%;
-  max-width: 40%;
+.stock_cards {
+  /* height: 130%; */
+  aspect-ratio: 1409/1838;
 }
 
-.right2 {
-  width: 60%;
+.players_cards {
+  height: 60%;
 }
 
 /* Clear floats after the columns */
