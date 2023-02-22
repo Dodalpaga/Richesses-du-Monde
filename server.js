@@ -1,13 +1,3 @@
-const path = require("path");
-const http = require("http");
-const express = require("express");
-let app = express();
-app.use(express.static(path.join(__dirname, "public")));
-const server = http.createServer(app);
-const io = require("socket.io")(server, {
-  transports: ["polling"],
-});
-
 var {
   userJoin,
   getCurrentUser,
@@ -21,6 +11,25 @@ var {
   wipeCards,
 } = require("./utils/cards");
 var { createDisposition } = require("./utils/disposition");
+const path = require("path");
+const http = require("http");
+const express = require("express");
+let app = express();
+app.use(express.static(path.join(__dirname, "public")));
+const server = http.createServer(app);
+const io = require("socket.io")(server, {
+  transports: ["polling"],
+});
+
+var fs = require("fs");
+var array = fs.readFileSync("utils/actualites.txt").toString().split(";");
+var actualites = [];
+actualites.push(array[0]);
+// for all element in arrray 1 to array.length, add element except first line to actualites
+for (i = 1; i < array.length - 1; i++) {
+  actualites.push(array[i].slice(2));
+}
+
 const userColors = ["#d9534f", "#5cb85c", "#5bc0de", "#f0ad4e"];
 const userCoordinates = [
   { x: 0.91, y: 0.9 },
@@ -210,6 +219,19 @@ io.on("connection", (client) => {
 
       client.emit("user rolled", rollData);
       client.broadcast.emit("user rolled", rollData);
+    }
+  });
+
+  client.on("news", () => {
+    var random = Math.floor(Math.random() * actualites.length);
+    // Create a variable to store the news
+    var news =
+      "<div class='news-item' style='text-align:center'><h3>" +
+      actualites[random] +
+      "</h3><p>";
+    const user = getCurrentUser(client.id);
+    if (user) {
+      io.to(user.room).emit("news", news);
     }
   });
 

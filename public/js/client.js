@@ -91,6 +91,10 @@ clientIO.on("user rolled", function (data) {
   logDice(data.username + " rolled: " + data.roll);
 });
 
+clientIO.on("news", function (data) {
+  document.getElementById("newsArea").innerHTML = data;
+});
+
 function makeTransaction() {
   var player1 = document.getElementById("player1").value;
   var player2 = document.getElementById("player2").value;
@@ -114,32 +118,12 @@ function makeTransaction() {
 }
 // Create a function so that the news can be displayed on the page when news-button is clicked
 
-function displayNews() {
-  var newsArray = [
-    { title: "News 1", content: "Content 1" },
-    { title: "News 2", content: "Content 2" },
-  ];
-  // Create a variable to store the news
-  // Create a for loop to loop through the news array
-  const random = Math.floor(Math.random() * newsArray.length);
-  var news = "";
-
-  // Create a variable to store the news
-  news =
-    news +
-    "<div class='news-item' style='text-align:center'><h3>" +
-    newsArray[random].title +
-    "</h3><p>" +
-    newsArray[random].content +
-    "</p></div>";
-
-  console.log(news);
-
-  // Display the news on the page
-  document.getElementById("newsArea").innerHTML = news;
+function toggleNews() {
+  clientIO.emit("news");
 }
 
-document.getElementById("news-button").addEventListener("click", displayNews);
+document.getElementById("news-button").addEventListener("click", toggleNews);
+
 document
   .getElementById("submitTransaction")
   .addEventListener("click", makeTransaction);
