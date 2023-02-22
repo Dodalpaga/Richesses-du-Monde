@@ -91,10 +91,10 @@
 #resultsArea {
   text-align: left;
   margin-top: 10px;
+  margin-bottom: 10px;
   /* 100 % moins les 60 px du bouton moins les 10 px de margin */
-  height: calc(100% - 70px);
+  height: calc(100% - 90px);
   color: white;
-  margin: 0;
   overflow-y: scroll;
 }
 
@@ -187,4 +187,16 @@ ul {
   color: white;
   font-size: 18px;
   font-weight: 100;
+}
+
+@media only screen and (max-width: 1750px) {
+  h3 {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  h3 {
+    font-size: 10px;
+  }
 }
