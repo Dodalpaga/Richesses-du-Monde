@@ -27,16 +27,10 @@ var actualites = [];
 actualites.push(array[0]);
 // for all element in arrray 1 to array.length, add element except first line to actualites
 for (i = 1; i < array.length - 1; i++) {
-  actualites.push(array[i].slice(2));
+  actualites.push(array[i].slice(1));
 }
 
 const userColors = ["#d9534f", "#5cb85c", "#5bc0de", "#f0ad4e"];
-const userCoordinates = [
-  { x: 0.91, y: 0.9 },
-  { x: 0.95, y: 0.9 },
-  { x: 0.95, y: 0.95 },
-  { x: 0.91, y: 0.95 },
-];
 
 io.on("connection", (client) => {
   // Listen to join event
@@ -74,7 +68,7 @@ io.on("connection", (client) => {
       (color) => !usedColors.includes(color)
     );
     const userColor = availableColors[0];
-    const userCoords = userCoordinates[getRoomUsers(room).length];
+    const userCoords = { x: 0.93, y: 0.92 };
     const user = userJoin(
       client.id,
       username,

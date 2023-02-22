@@ -52,12 +52,6 @@
         <div id="game-container"></div>
       </div>
       <div id="gameplay" class="column right">
-        <div
-          style="max-height: 50%; height: 50%; text-align: center; margin: 10px"
-        >
-          <input type="button" class="roll-button btn" value="Roll" />
-          <ul class="resultsArea" id="resultsArea"></ul>
-        </div>
         <div id="transactions">
           <div id="transactionsForm">
             <select name="player1" id="player1"></select>
@@ -78,30 +72,46 @@
               ></i>
             </div>
             <select name="player2" id="player2"></select>
+            <br />
+            <br />
+            <button
+              class="btn"
+              type="submit"
+              form="transactionsForm"
+              id="submitTransaction"
+            >
+              <span>Make Transaction</span>
+            </button>
           </div>
-
-          <br />
-          <br />
-          <button
-            class="btn"
-            type="submit"
-            form="transactionsForm"
-            id="submitTransaction"
-          >
-            <span>Make Transaction</span>
-          </button>
         </div>
         <div id="news">
           <div id="newsForm">
             <!-- Create a field where text is generated when a button is clicked -->
-            <input
-              type="button"
-              class="news-button btn2"
-              value="News"
-              id="news-button"
-            />
+            <!-- <input type="button" class="news-button btn2" /> -->
+            <button class="btn2 news-button" id="news-button">
+              <svg
+                width="180px"
+                height="30px"
+                viewBox="0 0 180 30"
+                class="border"
+              >
+                <polyline
+                  points="179,1 179,59 1,59 1,1 179,1"
+                  class="bg-line"
+                />
+                <polyline
+                  points="179,1 179,59 1,59 1,1 179,1"
+                  class="hl-line"
+                />
+              </svg>
+              <span>ACTUALITE</span>
+            </button>
             <div id="newsArea"></div>
           </div>
+        </div>
+        <div id="rollContainer">
+          <input type="button" class="roll-button btn" value="Roll" />
+          <ul class="resultsArea" id="resultsArea"></ul>
         </div>
       </div>
     </div>
