@@ -58,13 +58,17 @@ p {
 /* Join Page */
 .join-container {
   position: relative;
-  width: 700px;
-  margin: 80px auto;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
   color: #fff;
 }
 
 .join-header {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
   padding: 20px;
   background: var(--dark-color-a);
   border-top-left-radius: 5px;
@@ -72,10 +76,11 @@ p {
 }
 
 .join-main {
-  padding: 30px 40px;
-  background: var(--dark-color-b);
   display: flex;
   justify-content: center;
+  width: 100%;
+  padding: 30px 40px;
+  background: var(--dark-color-b);
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
@@ -106,6 +111,24 @@ p {
   padding: 5px;
   height: 40px;
   width: 100%;
+}
+
+.rules {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  padding: 5px;
+  bottom: 50px;
+  right: 50px;
+  width: 100px;
+  border-radius: 5px;
+  height: 50px;
+  background: rgba(73, 73, 73, 0.685);
+  color: white;
+  font-weight: 700;
+  font-size: 30px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.74);
 }
 
 .gw-title {
@@ -161,8 +184,11 @@ video {
 .scrollingBG {
   position: absolute;
   content: "";
-  width: 100%;
   height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
   z-index: -1;
   background-image: radial-gradient(
       circle,
@@ -172,8 +198,30 @@ video {
     url("../imgs/wallpaper.jpg");
 }
 
-@media (max-width: 1150px) {
-  .join-container {
-    max-width: 400px;
+@media (max-height: 800px) {
+  .join-header {
+    display: none;
+  }
+}
+
+@media (max-height: 700px) {
+  .join-header {
+    display: none;
+  }
+
+  .rules {
+    padding: 5px;
+    bottom: 35px;
+    right: 10px;
+    width: 70px;
+    border-radius: 5px;
+    height: 40px;
+    color: white;
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .gw-title span {
+    font: 1000 3em/1 "Oswald", sans-serif;
   }
 }
