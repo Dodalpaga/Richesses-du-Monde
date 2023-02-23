@@ -45,7 +45,6 @@ function createCard(client, id, path, x, y) {
       width: width,
       height: height,
       image: cardObj,
-      // cornerRadius: 10,
       draggable: true,
     });
     // add cursor styling

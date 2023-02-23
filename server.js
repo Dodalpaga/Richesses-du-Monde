@@ -4,12 +4,7 @@ var {
   userLeave,
   getRoomUsers,
 } = require("./utils/users");
-var {
-  getRoomCards,
-  createCard,
-  moveCard,
-  wipeCards,
-} = require("./utils/cards");
+var { getRoomCards, moveCard, wipeCards } = require("./utils/cards");
 var { createDisposition } = require("./utils/disposition");
 const path = require("path");
 const http = require("http");
