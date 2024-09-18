@@ -16,7 +16,7 @@
     "french-badwords-list": "^1.0.6",
     "leo-profanity": "^1.7.0",
     "moment": "^2.29.4",
-    "nodemon": "^2.0.20",
+    "nodemon": "^3.1.5",
     "socket.io": "^4.6.1"
   }
 }
